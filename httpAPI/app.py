@@ -7,11 +7,11 @@
 
 from flask import Flask, request, jsonify
 import dbconn
-import utils
-import json
+from flask_cors import *
+
 
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)
 
 @app.route('/', methods=['GET'])
 def index():
