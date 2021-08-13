@@ -81,7 +81,6 @@ def get_query_params(dev_port):
     return json.loads(resp.text)
 
 
-
 if __name__ == '__main__':
 
     tcp_server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)

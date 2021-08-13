@@ -17,7 +17,7 @@ function timeFormat(time) {
                 if (d_hours == 0 && d_minutes > 0) {
                     return d_minutes + '分钟前';
                 } else if (d_hours == 0 && d_minutes == 0) {
-                    return '1分钟前';
+                    return '1分钟内';
                 } else {
                     return d_hours + '小时前';
                 }
