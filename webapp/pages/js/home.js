@@ -1,9 +1,11 @@
 window.onload = function () {
     console.log("hello!");
 
-    // 获取设备概要信息
-    get_devices_info();
 
+    get_devices_info();
+    // setInterval(function(){
+    //     get_devices_info();
+    // }, 3000);
 
 }
 
@@ -11,19 +13,21 @@ function get_devices_info() {
 
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:5002/get_devices_info",
+        url: "http://192.168.123.189:5002/get_devices_info",
         dataType: "json",
         success: function (data) {
             console.log(data)
             var dev_nums = data.length;
-            if(dev_nums == 0){
+            if (dev_nums == 0) {
                 cocoMessage.warning("暂无设备数据")
-            }
-            else{
+            } else {
                 var card_template = $('.rt_card');
-                for(i=0;i<dev_nums;i++){
+                for (i = 0; i < dev_nums; i++) {
+
                     var card = card_template.clone();
-                    card.css('display','');
+
+                    card.attr('id', i);
+                    card.css('display', '');
                     // 站点名称
                     card.find('.card-dev-name').text(data[i]['name']);
                     // 上报时间
@@ -35,7 +39,7 @@ function get_devices_info() {
                     var time_delta = get_time_delta(current_time, update_time);
                     console.log(time_delta);
                     console.log(interval_time);
-                    if(time_delta > 2*interval_time){
+                    if (time_delta > 2 * interval_time) {
 
                         cocoMessage.error("有离线设备", 3000);
                         //2次以上上报失败
@@ -45,28 +49,25 @@ function get_devices_info() {
 
                     // 传感器
                     var sensors = data[i]['data'];
-                    card.find('.distance-1').text((sensors[0]['high_level']/1000).toFixed(2) + " M")
+                    card.find('.distance-1').text((sensors[0]['high_level'] / 1000).toFixed(2) + " M")
                     card.find('.sensor-1').text(sensors[0]['sensor_name'])
-                    if(sensors.length == 2){
+                    if (sensors.length == 2) {
                         // 双传感器情况
-                        card.find('.distance-2').text((sensors[1]['high_level']/1000).toFixed(2) + " M")
+                        card.find('.distance-2').text((sensors[1]['high_level'] / 1000).toFixed(2) + " M")
                         card.find('.sensor-2').text(sensors[1]['sensor_name'])
                     }
 
-
-
                     $('#real-time-cards').append(card);
+
                 }
 
             }
-
         },
         error: function (jqXHR) {
             cocoMessage.error("请求后台接口失败！", 3000);
         },
     });
-    // var dev_name = $('#real-time-cards').find('.card-dev-name').text();
-    // console.log(dev_name);
+
 }
 
 
