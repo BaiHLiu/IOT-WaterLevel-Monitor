@@ -1,0 +1,4 @@
+Flask==2.0.1
+requests==2.25.1
+crcmod==1.7
+flask_cors==3.0.10
