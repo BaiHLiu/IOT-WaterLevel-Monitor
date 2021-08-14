@@ -17,7 +17,7 @@ function ready_realtime_cards() {
 
     $.ajax({
         type: "GET",
-        url: "http://192.168.123.189:5002/get_devices_info",
+        url: "http://192.168.10.189:5002/get_devices_info",
         dataType: "json",
         success: function (data) {
             // console.log(data)
@@ -45,7 +45,7 @@ function get_devices_info() {
     // 更新设备实时数据
     $.ajax({
         type: "GET",
-        url: "http://192.168.123.189:5002/get_devices_info",
+        url: "http://192.168.10.189:5002/get_devices_info",
         dataType: "json",
         success: function (data) {
             // console.log(data)
