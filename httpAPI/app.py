@@ -8,6 +8,8 @@
 from flask import Flask, request, jsonify
 import dbconn
 from flask_cors import *
+import sys 
+sys.path.append("..") 
 from conf import Config
 
 
