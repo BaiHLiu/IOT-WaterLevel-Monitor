@@ -51,7 +51,7 @@ def work_msg(tcp_client):
 #tcp_client_1.close()
 
 if __name__ == "__main__":
-    local_port = 3000
+    local_port = 2003
     tcp_client = init_connect('127.0.0.1',10123,local_port)
     work_msg(tcp_client)
 

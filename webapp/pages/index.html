@@ -5,16 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
-    <script src="https://unpkg.com/coco-message/coco-message.min.js"></script>
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/google-fonts.css">
+    <link rel="stylesheet" href="./assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/fonts/fontawesome5-overrides.min.css">
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/coco-message.min.js"></script>
+    <script src="./assets/js/echarts.min.js"></script>
 
     <script src="./js/home.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/config.js"></script>
 </head>
 
 <body id="page-top">
@@ -143,9 +145,14 @@
                                             <div class="text-dark fw-bold h5 mb-0" style="width: 115px;"><span class="distance-1"></span><span style="font-size: 11px;margin-left: 10px;height: auto;" class="sensor-1"></span></div><small></small>
                                             <div class="text-dark fw-bold h5 mb-0" style="width: 115px;"><span class="distance-2"></span><span style="font-size: 11px;margin-left: 10px;" class="sensor-2"></span></div>
                                         </div>
-                                        <div class="col-auto offset-0 offset-lg-1"><i id="status_icon" class="fas fa-check fa-2x text-success"></i></div>
+                                        <div class="col-auto offset-0 offset-lg-1"><i id="status_icon" class=""></i></div>
                                         <div class="w-100"></div>
-                                    </div><small style="font-size: 10px;margin-left: 6px;"><span>更新时间：</span><span class="rt-update-time"></span></small>
+                                    </div>
+                                        <div>
+                                            <small style="font-size: 10px;margin-left: 6px;display: inline-block"><span>更新时间：</span><span class="rt-update-time"></span></small>
+                                            <small style="font-size: 10px;margin-left: 6px;display: inline-block;float: right;margin-top: 4px"><span>温度：</span><span class="rt-temp"></span><span>°C</span></small>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>
@@ -163,7 +170,9 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                    <div class="chart-area" style="margin-bottom: 40px">
+                                        <div id="history-chart" style="width: 100%;height:130%; margin: 0;padding: 0"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

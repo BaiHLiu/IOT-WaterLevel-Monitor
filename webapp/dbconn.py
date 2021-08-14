@@ -12,11 +12,11 @@ import sqlite3
 conn = sqlite3.connect("../db.sqlite", check_same_thread=False)
 
 
-def add_dev(dev_name, dev_port, interval_time, distance_query_arg, temperature_query_arg):
+def add_dev(dev_name, dev_port, interval_time, distance_query_arg, temperature_query_arg, alarm_params):
     """添加新设备"""
     cur = conn.cursor()
-    sql = "INSERT INTO dev_info(dev_name,dev_port,interval_time,distance_query_arg,temperature_query_arg) VALUES(?,?,?,?,?)"
-    params = [dev_name, dev_port, interval_time, distance_query_arg, temperature_query_arg]
+    sql = "INSERT INTO dev_info(dev_name,dev_port,interval_time,distance_query_arg,temperature_query_arg,alarm_params) VALUES(?,?,?,?,?,?)"
+    params = [dev_name, dev_port, interval_time, distance_query_arg, temperature_query_arg, alarm_params]
 
     cur.execute(sql, params)
     conn.commit()
@@ -170,6 +170,17 @@ def get_sensor_info(sensor_id):
     return cur.fetchone()
 
 
+def modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time, distance_query_arg, temperature_query_arg):
+    """修改设备信息"""
+    cur = conn.cursor()
+    sql = "UPDATE dev_info SET dev_name=?,dev_port=?,alarm_params=?,interval_time=?,distance_query_arg=?,temperature_query_arg=? " \
+          "WHERE dev_id=? "
+    params = [dev_name, dev_port, alarm_params, interval_time, distance_query_arg, temperature_query_arg, dev_id]
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
     # print(get_all_dev_info()[0])
@@ -183,7 +194,10 @@ if __name__ == "__main__":
 
     # print(get_water_level(3,100))
     # print(get_newest_record(4, 10))
-    print(get_recent_records(4, 10))
+    # print(get_recent_records(4, 10))
 
     # add_dev("模拟站点", "3000", 5, "03 01 00 00 01", "03 01 02 00 01")
     # add_sensor(4,"模拟距离2",400,'02')
+
+    # print(get_all_dev_info())
+    modify_device_config(4, "新名称", 3001, 10, "03 01 00 00 01", "03 01 02 00 01")
