@@ -1,6 +1,7 @@
+
+
 window.onload = function () {
     console.log("hello!");
-
     ready_realtime_cards();
 
     get_devices_info();
@@ -17,7 +18,7 @@ function ready_realtime_cards() {
 
     $.ajax({
         type: "GET",
-        url: "http://192.168.10.189:5002/get_devices_info",
+        url: config.web_api+"/get_devices_info",
         dataType: "json",
         success: function (data) {
             // console.log(data)
@@ -45,7 +46,7 @@ function get_devices_info() {
     // 更新设备实时数据
     $.ajax({
         type: "GET",
-        url: "http://192.168.10.189:5002/get_devices_info",
+        url: config.web_api+"/get_devices_info",
         dataType: "json",
         success: function (data) {
             // console.log(data)

@@ -2,3 +2,5 @@
 .DS_Store
 /.git/
 /.idea/
+conf.py
+/webapp/pages/js/config.js

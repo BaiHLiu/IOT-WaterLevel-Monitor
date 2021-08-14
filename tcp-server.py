@@ -10,11 +10,10 @@ import threading
 import socket
 import requests
 import httpAPI.utils as utils
+from conf import Config
 
-###########################################
-# HTTP-API设置
-HTTP_API_ENDPOINT = "http://127.0.0.1:5001"
-###########################################
+
+HTTP_API_ENDPOINT = Config.tcp_server['http_api_endpoint']
 
 
 def get_client_info(tcp_client_1, tcp_client_address):
@@ -48,7 +47,15 @@ def get_client_info(tcp_client_1, tcp_client_address):
                 print(f"[+] Sent to {str(tcp_client_address)} : {send_data_str}")
                 #接收数据
                 time.sleep(1)     #数据测量需要一段时间，避免出现0距离
-                recv_data = tcp_client_1.recv(4096)
+
+                tcp_client_1.settimeout(5)
+                try:
+                    #超时引发接收数据异常，断开连接销毁线程
+                    recv_data = tcp_client_1.recv(1024)
+                except:
+                    tcp_client_1.close()
+                    print("[!] Timed out, disconnected.")
+
                 if recv_data:
                     recv_data_str = bytes.hex(recv_data)
                     resp_args.append(recv_data_str)
@@ -85,8 +92,8 @@ if __name__ == '__main__':
 
     tcp_server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     tcp_server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,True)
-    tcp_server.bind(("", 10123))
-    tcp_server.listen(128)
+    tcp_server.bind((Config.tcp_server['bind_address'], Config.tcp_server['bind_port']))
+    tcp_server.listen(Config.tcp_server['max_connections'])
     while True:
         tcp_client_1 , tcp_client_address = tcp_server.accept()
         print("[+] New client connected: "+str(tcp_client_address))

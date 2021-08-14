@@ -8,10 +8,13 @@
 from flask import Flask, request, jsonify
 import dbconn
 from flask_cors import *
+from conf import Config
 
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -52,5 +55,6 @@ def get_query_params():
 
 
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host=Config.http_api['bind_address'], port=Config.http_api['bind_port'])

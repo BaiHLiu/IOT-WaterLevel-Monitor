@@ -8,6 +8,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import *
 import dbconn
+from conf import Config
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -128,4 +129,5 @@ def modify_device_config():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002)
+    app.run(host=Config.web_app['bind_address'], port=Config.web_app['bind_port'])
+
