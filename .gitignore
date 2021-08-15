@@ -4,3 +4,4 @@
 /.idea/
 conf.py
 /webapp/pages/js/config.js
+db.sqlite
