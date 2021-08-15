@@ -84,11 +84,11 @@ function get_devices_info() {
                     card.find('.rt-temp').text(temperature);
                     // 传感器
                     var sensors = data[i]['data'];
-                    card.find('.distance-1').text((sensors[0]['high_level'] / 1000).toFixed(3) + " M")
+                    card.find('.distance-1').text((sensors[0]['high_level'] / 1000).toFixed(2) + " M")
                     card.find('.sensor-1').text(sensors[0]['sensor_name'])
                     if (sensors.length == 2) {
                         // 双传感器情况
-                        card.find('.distance-2').text((sensors[1]['high_level'] / 1000).toFixed(3) + " M")
+                        card.find('.distance-2').text((sensors[1]['high_level'] / 1000).toFixed(2) + " M")
                         card.find('.sensor-2').text(sensors[1]['sensor_name'])
                     }
 
