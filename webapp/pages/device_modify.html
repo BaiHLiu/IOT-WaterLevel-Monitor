@@ -151,8 +151,8 @@
                                     <div class="input-group"><span class="input-group-text">串口地址</span><input class="form-control sensor_address" type="text"></div>
                                     <div class="input-group"><span class="input-group-text">校准参数</span><input class="form-control sensor-offset" type="text"></div>
                                     <div class="form-check"><input class="form-check-input home-graph-check" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">首页图表显示</label></div>
-                                    <div class="btn-group" role="group"></div><button class="btn btn-primary" type="button" style="background: var(--bs-green);border-bottom-style: none;border-bottom-color: var(--bs-teal);">校准</button>
-                                    <div class="btn-group dropdown float-end"><button class="btn btn-primary" type="button">操作</button><button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                    <div class="btn-group" role="group"></div><button class="btn btn-primary set-offset-button" type="button" style="background: var(--bs-green);border-bottom-style: none;border-bottom-color: var(--bs-teal);" onclick="set_offset();">校准</button>
+                                    <div class="btn-group dropdown float-end"><button class="btn btn-primary" type="button"  onclick="swal('非维护人员请勿修改除名称外的参数！','错误的参数将导致设备无法正常运行。','warning');">操作</button><button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" type="button"></button>
                                         <div class="dropdown-menu"><a class="dropdown-item change-sensor-conf" href="#">修改配置</a><a class="dropdown-item rm-sensor" href="#">删除设备</a></div>
                                     </div>
                                     <div class="btn-group" role="group"></div>
@@ -167,8 +167,8 @@
                                 <div class="input-group"><span class="input-group-text">轮询(秒）</span><input class="form-control device-time" type="text"></div>
                                 <div class="input-group"><span class="input-group-text">距离参数</span><input class="form-control device-distance" type="text"></div>
                                 <div class="input-group"><span class="input-group-text">温度参数</span><input class="form-control device-temperature" type="text"></div>
-                                <div class="btn-group dropdown float-end" style="margin-top: 17px;"><button class="btn btn-primary" type="button">操作</button><button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                    <div class="dropdown-menu"><a class="dropdown-item" href="#" onclick="change_device_config();">修改配置</a><a class="dropdown-item" href="#">删除设备</a></div>
+                                <div class="btn-group dropdown float-end" style="margin-top: 17px;"><button class="btn btn-primary" type="button"  onclick="swal('非维护人员请勿修改除名称外的参数！','错误的参数将导致设备无法正常运行。','warning');">操作</button><button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                    <div class="dropdown-menu"><a class="dropdown-item" href="#" onclick="change_device_config();">修改配置</a><a class="dropdown-item" href="#" onclick="rm_device();">删除设备</a></div>
                                 </div>
                                 <div class="input-group"></div>
                             </div>

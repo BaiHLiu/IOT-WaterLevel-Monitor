@@ -15,9 +15,6 @@ from conf import Config
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-# json响应模板
-resp_template = {'code': 0, 'msg': "", 'body': None}
-
 
 @app.route('/get_devices_info')
 def get_devices_info():
@@ -68,10 +65,9 @@ def get_history():
     return jsonify(his_list)
 
 
-@app.route('/add_device')
 def get_device():
     """添加新设备"""
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     dev_name = request.args.get('dev_name')
     dev_port = request.args.get('dev_port')
@@ -92,7 +88,7 @@ def get_device():
 @app.route('/get_devices_config')
 def get_devices_config():
     """获取设备配置信息"""
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
     try:
         ret_dict['body'] = dbconn.get_all_dev_info()
     except:
@@ -106,7 +102,7 @@ def get_devices_config():
 def get_sensors_config():
     """获取指定设备传感器信息"""
     dev_id = request.args.get('dev_id')
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     ret_dict['body'] = dbconn.get_sensors(dev_id)
 
@@ -116,7 +112,7 @@ def get_sensors_config():
 @app.route('/modify_device_config')
 def modify_device_config():
     """修改指定设备配置信息"""
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     dev_id = request.args.get('dev_id')
     dev_name = request.args.get('dev_name')
@@ -140,7 +136,7 @@ def modify_device_config():
 @app.route('/modify_sensor_config')
 def modify_sensor_config():
     """修改传感器配置"""
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     sensor_id = request.args.get('sensor_id')
     sensor_name = request.args.get('sensor_name')
@@ -160,7 +156,7 @@ def modify_sensor_config():
 def add_sensor():
     """新增传感器"""
     # 用户添加传感器时只需要输入名称，其他配置使用"修改配置"接口
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     sensor_name = request.args.get('sensor_name')
     bind_dev_id = request.args.get('bind_dev_id')
@@ -176,7 +172,7 @@ def add_sensor():
 @app.route('/rm_sensor')
 def rm_sensor():
     """删除传感器"""
-    ret_dict = resp_template
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
 
     sensor_id = request.args.get('sensor_id')
     try:
@@ -185,6 +181,66 @@ def rm_sensor():
         ret_dict['code'] = -1
 
     return jsonify(ret_dict)
+
+
+@app.route('/add_device')
+def add_device():
+    """新增串口服务器"""
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
+    # 用户添加串口服务器时只需要输入名称，其他配置使用"修改配置"接口
+    dev_name = request.args.get('dev_name')
+
+    try:
+        dbconn.add_dev(dev_name,'',10,'','','')
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
+
+
+@app.route('/rm_device')
+def rm_device():
+    """删除串口服务器"""
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
+    dev_id = request.args.get('dev_id')
+
+    try:
+        dbconn.rm_device(dev_id)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
+
+
+@app.route('/set_offset')
+def set_offset():
+    """设置偏移值"""
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
+
+    sensor_id = request.args.get('sensor_id')
+    offset = request.args.get('offset')
+
+    try:
+        dbconn.set_offset(sensor_id, offset)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
+
+
+@app.route('/get_distance')
+def get_distance():
+    """获取测量值"""
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
+    sensor_id = request.args.get('sensor_id')
+
+    try:
+        ret_dict['body'] = dbconn.get_sensor_distance(sensor_id)
+
+    except:
+        ret_dict['code'] = -1
+
+    return  jsonify(ret_dict)
 
 
 if __name__ == '__main__':

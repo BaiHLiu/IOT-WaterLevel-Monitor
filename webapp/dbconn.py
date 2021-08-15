@@ -203,6 +203,39 @@ def rm_sensor(sensor_id):
 
     conn.commit()
 
+def rm_device(dev_id):
+    """删除串口服务器"""
+    cur = conn.cursor()
+    sql = "DELETE FROM dev_info WHERE dev_id=?"
+    params = [dev_id]
+
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
+def set_offset(sensor_id, offset):
+    """快速设置偏移值"""
+    cur = conn.cursor()
+    sql = "UPDATE sensor_info SET distance_offset=? WHERE sensor_id=?"
+    params = [offset, sensor_id]
+
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
+def get_sensor_distance(sensor_id):
+    """获取指定设备最新测量值"""
+    cur = conn.cursor()
+    sql = "SELECT sensor_distance from upload_log WHERE sensor_id=? ORDER BY datetime DESC LIMIT 1"
+    params = [sensor_id]
+
+    cur.execute(sql, params)
+    distance = cur.fetchone()[0]
+
+    return distance
+
 
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
@@ -223,5 +256,9 @@ if __name__ == "__main__":
     # add_sensor(4,"模拟距离2",400,'02')
 
     # rm_sensor(8)
-    print(get_all_dev_info())
+    # print(get_all_dev_info())
     #modify_device_config(4, "新名称5", 2002, '',5, "03 01 00 00 01", "03 01 02 00 01")
+
+    # add_dev('hello', '', 10, '', '', '')
+    # print(get_sensor_distance(3))
+    set_offset(3,100)

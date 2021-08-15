@@ -1,9 +1,9 @@
 window.onload = function () {
     render_modify_device(getQueryVariable('dev_id'));
     render_modify_sensor(getQueryVariable('dev_id'));
+
 }
 
-// TODO:添加删除设备接口
 
 
 /*修改信息页面*/
@@ -103,6 +103,7 @@ function render_modify_sensor(dev_id) {
                 sensor_card.attr('id', sensors[i][0]);
 
                 // 修改传感器配置函数传参
+                sensor_card.find('.set-offset-button').attr('onclick', 'set_offset('+sensors[i][0]+')');
                 sensor_card.find('.change-sensor-conf').attr('onclick', 'change_sensor_config(' + sensors[i][0] + ')');
                 sensor_card.find('.rm-sensor').attr('onclick', 'rm_sensor(' + sensors[i][0] + ')');
                 if (sensors[i][5] == 1) {
@@ -176,7 +177,7 @@ function add_sensor(bind_dev_id) {
             showCancelButton: true,
             closeOnConfirm: false,
             animation: "slide-from-top",
-            inputPlaceholder: "输入一些话"
+            inputPlaceholder: "输入传感器名称"
         },
         function (inputValue) {
             if (inputValue === false) return false;
@@ -237,7 +238,7 @@ function rm_sensor(sensor_id) {
                 type: "GET",
                 url: config.web_api + "/rm_sensor",
                 data: {
-                    'sensor_id' : sensor_id
+                    'sensor_id': sensor_id
                 },
                 dataType: "json",
                 success: function (data) {
@@ -257,5 +258,113 @@ function rm_sensor(sensor_id) {
 
 
         });
+
+}
+
+
+function rm_device() {
+    /*删除设备*/
+    console.log('删除设备');
+    var dev_id = $('.dev_id').text();
+
+    $.ajax({
+        type: "GET",
+        url: config.web_api + "/rm_device",
+        data: {
+            'dev_id': dev_id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.code == '0') {
+                cocoMessage.success("配置保存成功！");
+                location.reload();
+            } else {
+                console.log(data);
+                cocoMessage.error("配置保存失败！", 3000);
+            }
+
+        },
+        error: function (jqXHR) {
+            cocoMessage.error("请求后台接口失败！", 3000);
+        },
+    });
+}
+
+
+function set_offset(sensor_id) {
+    /*校准设备*/
+    // 计算公式：真实值(level) = 距离值(distance) - 偏差值(offset)
+
+    console.log(get_distance(sensor_id));
+
+
+    swal({
+            title: "校准水位",
+            text: "当前真实水位(毫米值)",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "输入当前真实水位(毫米值)"
+        },
+        function (inputValue) {
+            if (inputValue === false) return false;
+
+            if (inputValue === "") {
+                swal.showInputError("请输入当前真实水位！");
+                return false
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: config.web_api + "/set_offset",
+                data: {
+                    'sensor_id': sensor_id,
+                    'offset' : get_distance(sensor_id) - inputValue
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == '0') {
+                        swal("成功", "success");
+                        location.reload();
+                    } else {
+                        console.log(data);
+                        cocoMessage.error("配置保存失败！", 3000);
+                    }
+
+                },
+                error: function (jqXHR) {
+                    cocoMessage.error("请求后台接口失败！", 3000);
+                },
+            });
+
+
+        });
+
+}
+
+
+function get_distance(sensor_id){
+    /*获取传感器测量值*/
+
+    let distance = undefined;
+
+    $.ajax({
+        type: "GET",
+        url: config.web_api + "/get_distance",
+        data: {
+            'sensor_id': sensor_id
+        },
+        async : false,
+        dataType: "json",
+        success: function (data) {
+            // console.log(data);
+            distance = data.body
+        }
+    });
+
+
+    return distance;
 
 }
