@@ -7,7 +7,7 @@ window.onload = function () {
     get_devices_info();
     setInterval(function () {
         get_devices_info();
-    }, 1000);
+    }, 2000);
 
     get_history_chart();
 
@@ -69,7 +69,7 @@ function get_devices_info() {
                     var current_time = getCurrentTime();
                     var time_delta = get_time_delta(current_time, update_time);
 
-                    if (time_delta > 2 * interval_time) {
+                    if (time_delta > 5 * interval_time) {
 
                         // cocoMessage.error("有离线设备", 3000);
                         //2次以上上报失败
