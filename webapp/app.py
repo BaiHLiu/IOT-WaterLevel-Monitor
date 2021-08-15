@@ -102,6 +102,15 @@ def get_devices_config():
     return jsonify(ret_dict)
 
 
+@app.route('/get_sensors_config')
+def get_sensors_config():
+    """获取指定设备传感器信息"""
+    dev_id = request.args.get('dev_id')
+    ret_dict = resp_template
+
+    ret_dict['body'] = dbconn.get_sensors(dev_id)
+
+    return jsonify(ret_dict)
 
 
 @app.route('/modify_device_config')
