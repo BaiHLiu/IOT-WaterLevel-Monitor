@@ -181,6 +181,29 @@ def modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time
     conn.commit()
 
 
+def modify_sensor_config(sensor_id, sensor_name, distance_offset, hex_address, home_graph):
+    """修改传感器信息"""
+    cur = conn.cursor()
+    sql = "UPDATE sensor_info SET sensor_name=?,distance_offset=?,hex_address=?,home_graph=? WHERE sensor_id=?"
+    params = [sensor_name, distance_offset, hex_address, home_graph, sensor_id]
+
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
+
+def rm_sensor(sensor_id):
+    """删除传感器"""
+    cur = conn.cursor()
+    sql = "DELETE FROM sensor_info WHERE sensor_id=?"
+    params = [sensor_id]
+
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
     # print(get_all_dev_info()[0])
@@ -199,5 +222,6 @@ if __name__ == "__main__":
     # add_dev("模拟站点", "3000", 5, "03 01 00 00 01", "03 01 02 00 01")
     # add_sensor(4,"模拟距离2",400,'02')
 
-    # print(get_all_dev_info())
-    modify_device_config(4, "新名称", 3001, 10, "03 01 00 00 01", "03 01 02 00 01")
+    # rm_sensor(8)
+    print(get_all_dev_info())
+    #modify_device_config(4, "新名称5", 2002, '',5, "03 01 00 00 01", "03 01 02 00 01")

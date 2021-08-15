@@ -132,11 +132,59 @@ def modify_device_config():
         ret_dict['code'] = -1
         ret_dict['msg'] = "修改配置信息失败"
 
+
+
     return jsonify(ret_dict)
 
 
+@app.route('/modify_sensor_config')
+def modify_sensor_config():
+    """修改传感器配置"""
+    ret_dict = resp_template
+
+    sensor_id = request.args.get('sensor_id')
+    sensor_name = request.args.get('sensor_name')
+    distance_offset = request.args.get('distance_offset')
+    hex_address = request.args.get('hex_address')
+    home_graph = request.args.get('home_graph')
+
+    try:
+        dbconn.modify_sensor_config(sensor_id, sensor_name, distance_offset, hex_address, home_graph)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
 
 
+@app.route('/add_sensor')
+def add_sensor():
+    """新增传感器"""
+    # 用户添加传感器时只需要输入名称，其他配置使用"修改配置"接口
+    ret_dict = resp_template
+
+    sensor_name = request.args.get('sensor_name')
+    bind_dev_id = request.args.get('bind_dev_id')
+
+    try:
+        dbconn.add_sensor(bind_dev_id, sensor_name, 0, "")
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
+
+
+@app.route('/rm_sensor')
+def rm_sensor():
+    """删除传感器"""
+    ret_dict = resp_template
+
+    sensor_id = request.args.get('sensor_id')
+    try:
+        dbconn.rm_sensor(sensor_id)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
 
 
 if __name__ == '__main__':
