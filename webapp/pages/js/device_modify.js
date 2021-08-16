@@ -5,7 +5,6 @@ window.onload = function () {
 }
 
 
-
 /*修改信息页面*/
 
 function render_modify_device(dev_id) {
@@ -103,7 +102,8 @@ function render_modify_sensor(dev_id) {
                 sensor_card.attr('id', sensors[i][0]);
 
                 // 修改传感器配置函数传参
-                sensor_card.find('.set-offset-button').attr('onclick', 'set_offset('+sensors[i][0]+')');
+                sensor_card.find('.set-offset-button').attr('onclick', 'set_offset(' + sensors[i][0] + ')');
+                sensor_card.find('.set-ground-button').attr('onclick', 'set_ground_level(' + sensors[i][0] + ')');
                 sensor_card.find('.change-sensor-conf').attr('onclick', 'change_sensor_config(' + sensors[i][0] + ')');
                 sensor_card.find('.rm-sensor').attr('onclick', 'rm_sensor(' + sensors[i][0] + ')');
                 if (sensors[i][5] == 1) {
@@ -295,7 +295,7 @@ function set_offset(sensor_id) {
     /*校准设备*/
     // 计算公式：真实值(level) = 距离值(distance) - 偏差值(offset)
 
-    console.log(get_distance(sensor_id));
+    // console.log(get_distance(sensor_id));
 
 
     swal({
@@ -321,7 +321,7 @@ function set_offset(sensor_id) {
                 url: config.web_api + "/set_offset",
                 data: {
                     'sensor_id': sensor_id,
-                    'offset' : get_distance(sensor_id) - inputValue
+                    'offset': get_distance(sensor_id) - inputValue
                 },
                 dataType: "json",
                 success: function (data) {
@@ -345,7 +345,54 @@ function set_offset(sensor_id) {
 }
 
 
-function get_distance(sensor_id){
+function set_ground_level(sensor_id) {
+    swal({
+            title: "校准底板海拔",
+            text: "底板海拔高度（毫米值）",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "输入当前底板海拔高度(毫米值)"
+        },
+        function (inputValue) {
+            if (inputValue === false) return false;
+
+            if (inputValue === "") {
+                swal.showInputError("请输入当前底板海拔！");
+                return false
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: config.web_api + "/set_ground_level",
+                data: {
+                    'sensor_id': sensor_id,
+                    'ground_level': inputValue
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == '0') {
+                        swal("成功", "success");
+                        location.reload();
+                    } else {
+                        console.log(data);
+                        cocoMessage.error("配置保存失败！", 3000);
+                    }
+
+                },
+                error: function (jqXHR) {
+                    cocoMessage.error("请求后台接口失败！", 3000);
+                },
+            });
+
+
+        });
+}
+
+
+function get_distance(sensor_id) {
     /*获取传感器测量值*/
 
     let distance = undefined;
@@ -356,7 +403,7 @@ function get_distance(sensor_id){
         data: {
             'sensor_id': sensor_id
         },
-        async : false,
+        async: false,
         dataType: "json",
         success: function (data) {
             // console.log(data);

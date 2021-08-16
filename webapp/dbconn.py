@@ -237,6 +237,20 @@ def get_sensor_distance(sensor_id):
     return distance
 
 
+def set_ground_level(sensor_id, ground_level):
+    """设置底板高度"""
+    cur = conn.cursor();
+    sql = "UPDATE sensor_info SET ground_level=? WHERE sensor_id=?"
+    params = [ground_level, sensor_id]
+
+    cur.execute(sql, params)
+
+    conn.commit()
+
+
+
+
+
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
     # print(get_all_dev_info()[0])

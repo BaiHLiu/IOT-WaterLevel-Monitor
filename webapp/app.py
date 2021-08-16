@@ -336,6 +336,20 @@ def homepage_history():
     return jsonify(ret_dict)
 
 
+@app.route('/set_ground_level')
+def set_ground_level():
+    """设置底板海拔"""
+    ret_dict = ret_dict = {'code': 0, 'msg': "", 'body': []}
+    sensor_id = request.args.get('sensor_id')
+    ground_level = request.args.get('ground_level')
+
+    try:
+        dbconn.set_ground_level(sensor_id, ground_level)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
+
 if __name__ == '__main__':
     app.run(host=Config.web_app['bind_address'], port=Config.web_app['bind_port'])
 
