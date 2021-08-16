@@ -7,8 +7,9 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import *
+import time
 import dbconn
-import sys 
+import sys
 sys.path.append("..") 
 from conf import Config
 
@@ -241,6 +242,96 @@ def get_distance():
         ret_dict['code'] = -1
 
     return  jsonify(ret_dict)
+
+
+@app.route('/get_period_history')
+def get_peroid_history():
+    """获取指定设备，指定时间段历史记录"""
+    HISTORY_LIMIT = 10
+    # 自动选出10个信息点，返回body={'id','datetime','waterlevel'}
+    # datetime已做格式化，方便图表显示
+    ret_dict = {'code': 0, 'msg': "", 'body': []}
+
+    sensor_id = request.args.get('sensor_id')
+    time_start = request.args.get('time_start')
+    time_end = request.args.get('time_end')
+    limit = request.args.get('limit')           # limit可选参数
+    if(limit):
+        HISTORY_LIMIT = int(limit)
+
+
+
+    sql_ret = dbconn.get_period_record(sensor_id, time_start, time_end)
+
+    # 从查询结果中平均截取指定条记录
+    seleted_idx = []
+    if(len(sql_ret) <= HISTORY_LIMIT):
+        for i in range(0, len(sql_ret)):
+            seleted_idx.append(i)
+    else:
+        for i in range(0, len(sql_ret), int(len(sql_ret)/HISTORY_LIMIT)):
+            seleted_idx.append(i)
+
+    seleted_idx = seleted_idx[0:HISTORY_LIMIT]
+
+    # 处理展示给前台的时间格式
+    stamp_start = int(time.mktime(time.strptime(sql_ret[0][6], '%Y-%m-%d %H:%M:%S')))
+    stamp_end = int(time.mktime(time.strptime(sql_ret[0][6], '%Y-%m-%d %H:%M:%S')))
+    time_delta = stamp_end - stamp_start
+    format_code = 0
+    format_start_idx = 0
+    format_end_idx = -1
+    if(time_delta <= 60*60*24):
+        # 不满1天，显示 小时：分钟
+        format_code = 0
+        format_start_idx = 11
+        format_end_idx = 16
+    elif(time_delta <= 60*60*24*365):
+        # 不满1年，显示 月份-天数
+        format_code = 1
+        format_start_idx = 5
+        format_end_idx = 10
+    else:
+        # 大于1年，显示 年份-月份
+        format_code = 2
+        format_start_idx = 0
+        format_end_idx = 7
+
+    # 遍历sql结果，符合条件的选出
+    i = 0
+    for rec in sql_ret:
+        if(i in seleted_idx):
+            record = {
+                'id': i,
+                'datetime' : rec[6][format_start_idx:format_end_idx],
+                'waterlevel' : dbconn.get_water_level(sensor_id, rec[4])
+            }
+
+            ret_dict['body'].append(record)
+
+        i += 1
+
+    return jsonify(ret_dict)
+
+
+@app.route('/homepage_show_sensors')
+def homepage_history():
+    """首页历史记录，设为首页显示才展示"""
+    ret_dict = {'code': 0, 'msg': "", 'body': []}
+
+    try:
+        dev_list = dbconn.get_all_dev_info()
+        for dev in dev_list:
+            dev_id = dev[0]
+            sensors = dbconn.get_sensors(dev_id)
+            for sen in sensors:
+                if(sen[5] == 1):
+                    sen_his = {'sensor_id':sen[0], 'sensor_name':sen[1], 'bind_dev_name':dev[1]}
+                    ret_dict['body'].append(sen_his)
+    except:
+        ret_dict['code'] = -1
+
+    return jsonify(ret_dict)
 
 
 if __name__ == '__main__':

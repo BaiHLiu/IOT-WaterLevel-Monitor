@@ -73,11 +73,11 @@ def modify_dev(dev_id, dev_name, dev_port, alarm_params, interval_time):
     conn.commit()
 
 
-def get_period_record(dev_id, start_time, end_time):
+def get_period_record(sensor_id, start_time, end_time):
     """获取指定设备time_m内历史记录"""
     cur = conn.cursor()
-    sql = "SELECT * FROM upload_log WHERE(datetime>? AND datetime<? AND dev_id=?)"
-    params = [start_time, end_time, dev_id]
+    sql = "SELECT * FROM upload_log WHERE(datetime>=? AND datetime<=? AND sensor_id=?)"
+    params = [start_time, end_time, sensor_id]
     cur.execute(sql, params)
     ret = cur.fetchall()
 
