@@ -156,7 +156,7 @@ function get_history_chart() {
 
     for (i = 0; i < show_sensors.length; i++) {
         var history_list = {'name': '', 'history': undefined};
-        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(559200), 6);
+        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(12000), 10);
         if (resp != undefined) {
             var dev_name = (show_sensors[i]['bind_dev_name']);
             var sensor_name = show_sensors[i]['sensor_name'];
@@ -187,7 +187,7 @@ function get_history_chart() {
         }
 
         for (j = 0; j < ret_list[i]['history'].length; j++) {
-            var time = ret_list[i]['history'][j]['waterlevel'];
+            var time = (ret_list[i]['history'][j]['waterlevel']/1000).toFixed(2);
             serie['data'].push(time);
 
             // 临时按照取第一个传感器的时间

@@ -42,7 +42,8 @@ def get_devices_info():
                 sen_info = {
                     'high_level': dbconn.get_water_level(sens['sensor_id'], sens['distance']),
                     'temperature': sens['temperature'],
-                    'sensor_name': dbconn.get_sensor_info(sens['sensor_id'])[1]
+                    'sensor_name': dbconn.get_sensor_info(sens['sensor_id'])[1],
+                    'sensor_id' : sens['sensor_id']
 
                 }
                 dev_info['data'].append(sen_info)
