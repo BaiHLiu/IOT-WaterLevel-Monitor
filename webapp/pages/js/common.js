@@ -85,3 +85,21 @@ function getQueryVariable(variable)
        }
        return(false);
 }
+
+
+function get_befor_time(time_delta){
+    /*获取当前时间之前time_delta的时间字符串*/
+    var now = new Date();//当前时间
+    var date = new Date((now.getTime()/1000 - time_delta) * 1000)
+    var month = zeroFill(date.getMonth() + 1);//月
+    var day = zeroFill(date.getDate());//日
+    var hour = zeroFill(date.getHours());//时
+    var minute = zeroFill(date.getMinutes());//分
+    var second = zeroFill(date.getSeconds());//秒
+
+    //当前时间
+    var curTime = date.getFullYear() + "-" + month + "-" + day
+            + " " + hour + ":" + minute + ":" + second;
+
+    return curTime;
+}
