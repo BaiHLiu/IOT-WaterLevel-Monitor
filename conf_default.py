@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2021/8/16 3:04 下午
 # @Author  : Catop
-# @File    : conf_default.py
+# @File    : pushconf_default.py
 # @Software: PyCharm
 
 
@@ -22,4 +22,9 @@ class Config:
     web_app = {
         "bind_address": "0.0.0.0",
         "bind_port": 5002
+    }
+
+    msg_push = {
+        "topic_ids": [''],
+        "token": ''
     }

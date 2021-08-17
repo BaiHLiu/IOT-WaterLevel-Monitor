@@ -4,7 +4,7 @@
 # @Author  : Catop
 # @File    : dbconn.py
 # @Software: Flask后端数据库连接
-
+import json
 from datetime import datetime
 import datetime as dt
 import sqlite3
@@ -96,16 +96,17 @@ def get_newest_record(dev_id, number=1):
         params = [dev_id, sens[0]]
         cur.execute(sql, params)
         sql_ret = cur.fetchone()
-        sensor_record = {
-            'dev_ip': sql_ret[2],
-            'sensor_id': sql_ret[3],
-            'distance': sql_ret[4],
-            'temperature': sql_ret[5],
-            'offset': sens[3],
-            'update_time': sql_ret[6]
-        }
+        if(sql_ret):
+            sensor_record = {
+                'dev_ip': sql_ret[2],
+                'sensor_id': sql_ret[3],
+                'distance': sql_ret[4],
+                'temperature': sql_ret[5],
+                'offset': sens[3],
+                'update_time': sql_ret[6]
+            }
 
-        ret_list.append(sensor_record)
+            ret_list.append(sensor_record)
 
     return ret_list
 
@@ -239,12 +240,28 @@ def get_sensor_distance(sensor_id):
 
 def set_ground_level(sensor_id, ground_level):
     """设置底板高度"""
-    cur = conn.cursor();
+    cur = conn.cursor()
     sql = "UPDATE sensor_info SET ground_level=? WHERE sensor_id=?"
     params = [ground_level, sensor_id]
 
     cur.execute(sql, params)
 
+    conn.commit()
+
+
+def set_alarm_param(dev_id, max_level, min_level, time_delta, level_delta):
+    """设置报警参数"""
+    cur = conn.cursor()
+    sql = "UPDATE dev_info SET alarm_params=? WHERE dev_id=?"
+    alarm_list = [
+        max_level,
+        min_level,
+        time_delta,
+        level_delta
+    ]
+
+    params = [json.dumps(alarm_list), dev_id]
+    cur.execute(sql, params)
     conn.commit()
 
 
@@ -275,4 +292,5 @@ if __name__ == "__main__":
 
     # add_dev('hello', '', 10, '', '', '')
     # print(get_sensor_distance(3))
-    set_offset(3,100)
+    # set_offset(3,100)
+    set_alarm_param(3,0,0,30,1000)

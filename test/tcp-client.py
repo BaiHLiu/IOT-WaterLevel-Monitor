@@ -32,7 +32,7 @@ def work_msg(tcp_client):
                 print("[+]Received command:"+recv_data_str)
                 if recv_data_str=="01030100000185f6":
                     # 查询距离_01
-                    send_data_str = "01 03 02 02 F2 38 A1"
+                    send_data_str = "01 03 02 0B B8 38 A1"
                 elif recv_data_str == "0103010200012436":
                     # 查询温度_01
                     send_data_str = "01 03 02 01 2C B8 09"

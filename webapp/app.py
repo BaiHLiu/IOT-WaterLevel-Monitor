@@ -339,7 +339,7 @@ def homepage_history():
 @app.route('/set_ground_level')
 def set_ground_level():
     """设置底板海拔"""
-    ret_dict = ret_dict = {'code': 0, 'msg': "", 'body': []}
+    ret_dict = {'code': 0, 'msg': "", 'body': []}
     sensor_id = request.args.get('sensor_id')
     ground_level = request.args.get('ground_level')
 
@@ -349,6 +349,26 @@ def set_ground_level():
         ret_dict['code'] = -1
 
     return jsonify(ret_dict)
+
+
+@app.route('/set_alarm')
+def set_alarm():
+    """设置报警参数"""
+    ret_dict = {'code': 0, 'msg': "", 'body': []}
+
+    dev_id = int(request.args.get('dev_id'))
+    high_line = int(request.args.get('high_line'))
+    low_line = int(request.args.get('low_line'))
+    change_time = int(request.args.get('change_time'))
+    change_level = int(request.args.get('change_level'))
+
+    try:
+        dbconn.set_alarm_param(dev_id, high_line, low_line, change_time, change_level)
+    except:
+        ret_dict['code'] = -1
+
+    return  jsonify(ret_dict)
+
 
 if __name__ == '__main__':
     app.run(host=Config.web_app['bind_address'], port=Config.web_app['bind_port'])
