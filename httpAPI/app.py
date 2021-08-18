@@ -102,7 +102,10 @@ def upload_log():
 @app.route('/get_query_params', methods=['GET'])
 def get_query_params():
     dev_port = str(request.args.get('dev_port'))
-    params = dbconn.get_query_info(dev_port)
+    if(dbconn.check_exist(dev_port)):
+        params = dbconn.get_query_info(dev_port)
+    else:
+        params = {'sensor_list' : []}
 
     return jsonify(params)
 

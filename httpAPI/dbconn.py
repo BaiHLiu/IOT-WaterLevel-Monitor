@@ -187,6 +187,20 @@ def get_dev_info(dev_id):
 
     return cur.fetchone()
 
+def check_exist(port):
+    """检查对应端口设备是否存在"""
+    cur = conn.cursor()
+    sql = "SELECT dev_id FROM dev_info WHERE dev_port=?"
+    params = [port]
+    cur.execute(sql, params)
+
+    sql_ret = cur.fetchall()
+    if(len(sql_ret) > 0):
+        return  True
+    else:
+        return  False
+
+
 if __name__ == "__main__":
     #add_log('127.0.0.1','6002',1211,37.2)
     #print(get_query_info('2000'))
@@ -197,3 +211,4 @@ if __name__ == "__main__":
     # set_alarm_log(5,4,1,800)
     # print(get_alarm_log(4))
     print(get_water_level(5,754))
+    print(check_exist(2001))
