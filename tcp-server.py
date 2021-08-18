@@ -26,7 +26,7 @@ def get_client_info(tcp_client_1, tcp_client_address):
 
         # 请求http api，更新查询参数列表
         query_params = get_query_params(client_port)
-        if len(query_params['sensor_list']) > 0:
+        if len(query_params['sensors_list']) > 0:
             # 第1种上报类型：串口服务器带固定本地端口，用固定的端口接收指令
             pass
         else:

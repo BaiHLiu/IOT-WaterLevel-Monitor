@@ -105,7 +105,7 @@ def get_query_params():
     if(dbconn.check_exist(dev_port)):
         params = dbconn.get_query_info(dev_port)
     else:
-        params = {'sensor_list' : []}
+        params = {'sensors_list' : []}
 
     return jsonify(params)
 
