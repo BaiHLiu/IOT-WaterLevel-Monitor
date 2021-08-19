@@ -321,7 +321,7 @@ function set_offset(sensor_id) {
                 url: config.web_api + "/set_offset",
                 data: {
                     'sensor_id': sensor_id,
-                    'offset': get_distance(sensor_id) - inputValue
+                    'offset': get_distance(sensor_id) + inputValue
                 },
                 dataType: "json",
                 success: function (data) {

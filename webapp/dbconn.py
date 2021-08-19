@@ -150,7 +150,7 @@ def get_sensors(dev_id):
 
 def get_water_level(sensor_id, distance):
     """获取指定传感器的真实值"""
-    # 计算公式：真实值(level) = 距离值(distance) - 偏差值(offset)
+    # 计算公式：真实值(level) = 偏差值(offset) - 距离值(distance)
     cur = conn.cursor()
     sql = "SELECT distance_offset FROM sensor_info WHERE sensor_id=? LIMIT 1"
     params = [sensor_id]
@@ -158,7 +158,7 @@ def get_water_level(sensor_id, distance):
     cur.execute(sql, params)
     offset = cur.fetchone()[0]
 
-    return distance - offset
+    return offset - distance
 
 
 def get_sensor_info(sensor_id):
