@@ -184,7 +184,7 @@ function get_history_chart() {
         serie = {
             name: name,
             type: 'line',
-            stack: '水位',
+            stack: '水位'+i,
             data: []
         }
 
@@ -214,7 +214,7 @@ function get_history_chart() {
 
 // 渲染首页历史记录图表
 function render_history_chart(ret_title, ret_times, ret_series) {
-
+    console.log(ret_series);
     var myChart = echarts.init(document.getElementById('history-chart'));
     // 指定图表的配置项和数据
     option = {
