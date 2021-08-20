@@ -441,10 +441,15 @@ def set_alarm():
 @app.route('/generate_rt_report')
 def generate_rt_report():
     """获取实时报表"""
-    rt_info = json.loads(get_devices_info().get_data())
-    file_name = rt_report.generate_rt_report(rt_info)
+    ret_dict = {'code': 0, 'msg': "", 'body': ''}
+    try:
+        rt_info = json.loads(get_devices_info().get_data())
+        file_name = rt_report.generate_rt_report(rt_info).split('/')[-1]
+        ret_dict['body'] = file_name
+    except:
+        ret_dict['code'] = -1
 
-    return file_name
+    return ret_dict
 
 
 if __name__ == '__main__':

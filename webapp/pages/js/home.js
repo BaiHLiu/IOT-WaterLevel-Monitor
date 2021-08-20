@@ -15,11 +15,10 @@ window.onload = function () {
 function check_login() {
     // 检查登陆状态
     // 伪装登陆
-    if(localStorage.getItem('username')){
-        cocoMessage.success("登陆成功",1000);
-    }
-    else{
-        location.href='./login.html';
+    if (localStorage.getItem('username')) {
+        cocoMessage.success("登陆成功", 1000);
+    } else {
+        location.href = './login.html';
     }
 }
 
@@ -270,4 +269,28 @@ function render_history_chart(ret_title, ret_times, ret_series) {
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+}
+
+
+function generate_rt_table() {
+    // 获取即时报表
+    $.ajax({
+        type: "GET",
+        url: config.web_api + "/generate_rt_report",
+        dataType: "json",
+        success: function (data) {
+            // console.log(data);
+            if (data.code == '0') {
+
+                window.location.href = './static/rt-table/'+data.body;
+            } else {
+
+                cocoMessage.error("生成报表失败", 3000);
+            }
+
+        },
+        error: function (jqXHR) {
+            cocoMessage.error("请求后台接口失败！", 3000);
+        },
+    });
 }

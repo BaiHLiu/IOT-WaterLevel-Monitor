@@ -5,12 +5,19 @@
 # @File    : rt_report.py
 # @Software: 生成实时数据报表
 
+import shutil
+import time
+
 import xlwt
 from datetime import datetime
 
+# 网站目录绑定
+TABLE_FILE_PATH = "/www/wwwroot/wateriot.catop.top/static/rt-table/"
+
+
 
 def generate_rt_report(rt_info):
-    now_time = datetime.now().strftime("%Y-%m-%d")
+    now_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     workbook = xlwt.Workbook(encoding='utf-8')
     worksheet = workbook.add_sheet('Sheet1')
 
@@ -31,7 +38,7 @@ def generate_rt_report(rt_info):
     style_title = xlwt.XFStyle()
     style_title.font = font_title
 
-    worksheet.write_merge(0, 0, 0, 6, f'昌邑市潍河防潮蓄水闸服务所每日报表 {now_time}', style_title)
+    worksheet.write_merge(0, 0, 0, 6, f'昌邑市潍河防潮蓄水闸服务所每日报表 {now_time.split(" ")[0]}', style_title)
 
     # 表头
     font_text = xlwt.Font()
@@ -66,8 +73,9 @@ def generate_rt_report(rt_info):
                 idx += 1
 
     # 保存
-    file_name = f'../data/real-time-table/每日报表-{now_time}.xls'
+    file_name = f'../data/real-time-table/每日水位报表-{now_time}.xls'
     workbook.save(file_name)
+    shutil.move(file_name, TABLE_FILE_PATH)
     return file_name
 
 
