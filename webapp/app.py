@@ -98,7 +98,7 @@ def get_devices_info():
 
                 }
                 dev_info['data'].append(sen_info)
-                if int(sen_info['high_level']) > int(max_line):
+                if (not int(max_line) == 0) and (int(sen_info['high_level']) > int(max_line)):
                     dev_info['if_alarm'] = True
 
             ret_dict.append(dev_info)
