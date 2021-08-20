@@ -299,6 +299,7 @@ if __name__ == "__main__":
     # modify_device_config(4, "新名称5", 2002, '',5, "03 01 00 00 01", "03 01 02 00 01")
 
     # add_dev('hello', '', 10, '', '', '')
-    print(get_sensor_distance(3))
+    # print(get_sensor_distance(3))
     # set_offset(3,100)
     # set_alarm_param(3,0,0,30,1000)
+    print(get_dev_by_id(3))

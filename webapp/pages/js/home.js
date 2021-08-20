@@ -91,6 +91,10 @@ function get_devices_info() {
                         card.find('.sensor-2').text(sensors[1]['sensor_name']);
                         card.find('.rt-water-depth').text((sensors[0]['water_depth'] / 1000).toFixed(2) + " M / " + (sensors[1]['water_depth'] / 1000).toFixed(2) + " M");
                     }
+                    // 警戒水位超限状态
+                    if(data[i]['if_alarm'] == true){
+                        card.find('.card-dev-alarm').text('[超警戒水位]')
+                    }
 
                 }
 
@@ -158,7 +162,7 @@ function get_history_chart() {
 
     for (i = 0; i < show_sensors.length; i++) {
         var history_list = {'name': '', 'history': undefined};
-        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(12000), 20);
+        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(30000), 20);
         if (resp != undefined) {
             var dev_name = (show_sensors[i]['bind_dev_name']);
             var sensor_name = show_sensors[i]['sensor_name'];

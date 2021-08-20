@@ -24,13 +24,17 @@ def get_devices_info():
     devs = dbconn.get_all_dev_info()
     # print(devs)
     for dev in devs:
+        # 获取警戒水位限
+        max_line = (dbconn.get_dev_by_id(dev[0])[4][1:-2]).split(', ')[0]
+
         dev_info = {
             'id': dev[0],
             'name': dev[1],
             'update_time': dev[3],
             'ip': None,
             'interval_time': dev[6],
-            'data': []
+            'data': [],
+            'if_alarm' : False
         }
         # 获取最新上报信息
         dev_upload_msg = dbconn.get_newest_record(dev[0])
@@ -48,6 +52,8 @@ def get_devices_info():
 
                 }
                 dev_info['data'].append(sen_info)
+                if int(sen_info['high_level']) > int(max_line):
+                    dev_info['if_alarm'] = True
 
             ret_dict.append(dev_info)
 

@@ -207,8 +207,10 @@ if __name__ == "__main__":
     #print(get_dev_id('2000'))
     # print(get_sensor_id(3, '01'))
     # print(get_alarm_params(3))
-    print(get_min_before_record(4,30))
+    # print(get_min_before_record(4,30))
     # set_alarm_log(5,4,1,800)
     # print(get_alarm_log(4))
-    print(get_water_level(5,754))
-    print(check_exist(2001))
+    # print(get_water_level(5,754))
+    # print(check_exist(2001))
+
+    print(get_dev_info(3))

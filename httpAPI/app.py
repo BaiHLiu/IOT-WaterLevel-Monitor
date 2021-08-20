@@ -71,7 +71,8 @@ def get_query_params():
 def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
     """报警推送"""
     msg_str = f"## 水位监控告警\n+ 监测点:{dev_name}\n+ 传感器:{sensor_name}\n"
-    ALARM_INTERVAL = 60  # 同种类型的告警间隔时间（分钟）
+    ALARM_INTERVAL_LINE = 180       # 高低水位超限报警间隔
+    ALARM_INTERVAL_CHANGE = 60      # 变化水位超限报警间隔
 
     alarm_params = json.loads(dbconn.get_alarm_params(dev_id))
     water_level = int(dbconn.get_water_level(sensor_id, int(distance)))
@@ -94,7 +95,7 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
                 time_delta = int(((datetime.datetime.now() - datetime.datetime.strptime(alarm_log[5],
                                                                                         '%Y-%m-%d %H:%M:%S')).seconds) / 60)
                 # 同种类型报警（高低警戒线）
-                if (time_delta > ALARM_INTERVAL):
+                if (time_delta > ALARM_INTERVAL_LINE):
                     # 符合时间间隔
                     push.send_message(
                         msg_str + f"+ 告警类型：高低水位超限\n+ 水位值：{water_level} 毫米\n+ 预警值:{low_line}/{high_line} 毫米")
@@ -113,7 +114,7 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
                 else:
                     time_delta = int(((datetime.datetime.now() - datetime.datetime.strptime(alarm_log[5],
                                                                                             '%Y-%m-%d %H:%M:%S')).seconds) / 60)
-                    if (time_delta > ALARM_INTERVAL):
+                    if (time_delta > ALARM_INTERVAL_CHANGE):
                         push.send_message(
                             msg_str + f"+ 告警类型：水位变化速率超限\n+ 时间范围：{time_line} 分钟\n+ 变化值：{str(sen[1] - water_level)} mm\n+ 预警值:{time_line} 分钟内 变化 {delta_line} mm")
                         dbconn.set_alarm_log(sensor_id, dev_id, 2, water_level)
