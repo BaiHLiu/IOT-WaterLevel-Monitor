@@ -81,8 +81,8 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
     importlib.reload(dbconn)
     alarm_params = json.loads(dbconn.get_alarm_params(dev_id))
     water_level = int(dbconn.get_water_level(sensor_id, int(distance)))
-    low_line = int(alarm_params[0])
-    high_line = int(alarm_params[1])
+    low_line = int(alarm_params[1])
+    high_line = int(alarm_params[0])
     time_line = int(alarm_params[2])
     delta_line = int(alarm_params[3])
 
