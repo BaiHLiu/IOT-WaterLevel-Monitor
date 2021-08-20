@@ -4,11 +4,13 @@
 # @Author  : Catop
 # @File    : app.py
 # @Software: flask后端主程序
+import json
 
 from flask import Flask, request, jsonify
 from flask_cors import *
 import time
 import dbconn
+import rt_report
 import sys
 sys.path.append("..") 
 from conf import Config
@@ -386,6 +388,13 @@ def set_alarm():
     return  jsonify(ret_dict)
 
 
+@app.route('/generate_rt_report')
+def generate_rt_report():
+    """获取实时报表"""
+    rt_info = json.loads(get_devices_info().get_data())
+    file_name = rt_report.generate_rt_report(rt_info)
+
+    return file_name
 
 
 if __name__ == '__main__':

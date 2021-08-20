@@ -5,6 +5,7 @@
 # @File    : app.py
 # @Software: 提供tcp-server回调接口，保存设备查询数据
 import json
+import importlib
 
 from flask import Flask, request, jsonify
 import dbconn
@@ -31,6 +32,7 @@ def upload_log():
     ret_dict = {}
     try:
         # 串口服务器信息
+        importlib.reload(dbconn)
         ip = request.args.get('ip')
         port = request.args.get('port')
         dev_id = dbconn.get_dev_id(port)
@@ -59,6 +61,8 @@ def upload_log():
 
 @app.route('/get_query_params', methods=['GET'])
 def get_query_params():
+
+    importlib.reload(dbconn)
     dev_port = str(request.args.get('dev_port'))
     if (dbconn.check_exist(dev_port)):
         params = dbconn.get_query_info(dev_port)
@@ -74,6 +78,7 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
     ALARM_INTERVAL_LINE = 180       # 高低水位超限报警间隔
     ALARM_INTERVAL_CHANGE = 60      # 变化水位超限报警间隔
 
+    importlib.reload(dbconn)
     alarm_params = json.loads(dbconn.get_alarm_params(dev_id))
     water_level = int(dbconn.get_water_level(sensor_id, int(distance)))
     low_line = int(alarm_params[0])
