@@ -110,7 +110,7 @@ function get_history_chart(show_sensors, start_time, end_time) {
 
     for (i = 0; i < show_sensors.length; i++) {
         var history_list = {'name': '', 'history': undefined};
-        var resp = send_history_chart(show_sensors[i][0], end_time, start_time, 15);
+        var resp = send_history_chart(show_sensors[i][0], end_time, start_time, 24);
         if (resp != undefined) {
             var sensor_name = show_sensors[i][1];
 

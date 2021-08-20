@@ -158,7 +158,7 @@ function get_history_chart() {
 
     for (i = 0; i < show_sensors.length; i++) {
         var history_list = {'name': '', 'history': undefined};
-        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(12000), 10);
+        var resp = send_history_chart(show_sensors[i]['sensor_id'], getCurrentTime(), get_befor_time(12000), 20);
         if (resp != undefined) {
             var dev_name = (show_sensors[i]['bind_dev_name']);
             var sensor_name = show_sensors[i]['sensor_name'];

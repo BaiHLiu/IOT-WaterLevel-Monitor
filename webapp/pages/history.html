@@ -22,6 +22,10 @@
 
 </head>
 
+<style>
+    input.show_placeholder:before{ content: attr(placeholder);}
+</style>
+
 <body id="page-top">
 <div id="wrapper">
     <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
@@ -192,11 +196,31 @@
                     <div class="input-group"></div>
                 </div>
             </div>
-            <div class="input-group"><input class="form-control" type="date" id="start-time" placeholder="开始时间"><input class="form-control"
+            <div class="input-group"><input class="form-control show_placeholder" type="date" id="start-time" placeholder="开始时间"><input class="form-control show_placeholder"
                                                                                                     type="date"
                                                                                                     id="end-time" placeholder="结束时间">
-                <button class="btn btn-primary" type="button" onclick="get_button_action();">查询</button>
+
             </div>
+
+            <center style="margin-top: 30px"><button class="btn btn-primary" style="width: 70vw;" type="button" onclick="get_button_action();">查询</button></center>
+
+
+
+
+            <script>
+                <!--显示开始时间和结束时间提示-->
+                $('.show_placeholder').blur(function () {
+                    var obj = $(this);
+                    if (!obj.val()) {
+                        $(this).addClass('show_placeholder');
+                    } else {
+                        $(this).removeClass('show_placeholder');
+                    }
+                });
+                $('.show_placeholder').focus(function () {
+                    $(this).removeClass('show_placeholder');
+                })
+            </script>
 
             <div id="history-cards">
                 <div class="row chart-card" style="margin-top: 20px; display: none" id="">
