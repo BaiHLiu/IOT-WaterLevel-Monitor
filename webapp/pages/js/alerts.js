@@ -18,7 +18,7 @@ function render_table() {
                     row.css('display', '');
                     row.find('.device-name').text(devices_info[i][1]);
                     row.find('.config-link').attr('href', './alert_modify.html?dev_id='+devices_info[i][0]);
-                    var alert_params = devices_info[i][4].slice(1, -2).split(',');
+                    var alert_params = devices_info[i][4].slice(1, -1).split(', ');
 
                     if (alert_params.length == 1) {
                         // 无配置

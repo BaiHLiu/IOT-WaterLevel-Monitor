@@ -87,7 +87,7 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
             if (not alarm_log):
                 # 没报警过
                 push.send_message(
-                    msg_str + f"+ 告警类型：高低水位超限\n+ 水位值：{water_level / 1000}米\n+ 预警值:{low_line / 1000}/{high_line / 1000}")
+                    msg_str + f"+ 告警类型：高低水位超限\n+ 水位值：{water_level} 毫米\n+ 预警值:{low_line}/{high_line} 毫米")
                 dbconn.set_alarm_log(sensor_id, dev_id, 1, water_level)
             else:
                 # 报警过
@@ -97,7 +97,7 @@ def push_alarm(dev_id, sensor_id, distance, dev_name, sensor_name):
                 if (time_delta > ALARM_INTERVAL):
                     # 符合时间间隔
                     push.send_message(
-                        msg_str + f"+ 告警类型：高低水位超限\n+ 水位值：{water_level / 1000}米\n+ 预警值:{low_line / 1000}/{high_line / 1000}")
+                        msg_str + f"+ 告警类型：高低水位超限\n+ 水位值：{water_level} 毫米\n+ 预警值:{low_line}/{high_line} 毫米")
                     dbconn.set_alarm_log(sensor_id, dev_id, 1, water_level)
 
     if (not (time_line == 0)) and (not (delta_line == 0)):

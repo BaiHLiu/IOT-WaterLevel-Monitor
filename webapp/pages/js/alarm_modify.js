@@ -11,10 +11,9 @@ function render_card() {
         success: function (data) {
             if (data.code == '0') {
                 var devices_info = data.body;
-                // console.log(devices_info);
 
-                var alert_params = devices_info[4].slice(1, -2).split(',');
-                // console.log(alert_params);
+                var alert_params = devices_info[4].slice(1, -1).split(', ');
+                console.log(alert_params);
                 var card = $('#alarm-control');
 
                 if (alert_params.length == 1) {

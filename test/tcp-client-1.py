@@ -37,7 +37,7 @@ def work_msg(tcp_client):
                 elif recv_data_str == "0103010200012436":
                     # 查询温度_01
                     send_data_str = "01 03 02 01 2C B8 09"
-                elif recv_data_str == "02030100000185C5":
+                elif recv_data_str == "02030100000185c5":
                     # 查询距离_02
                     send_data_str = "02 03 02 0B 3C FB 65"
                 elif recv_data_str == "0203010200012405":
@@ -46,10 +46,10 @@ def work_msg(tcp_client):
                 elif recv_data_str == "0303010000018414":
                     # 查询距离_03
                     send_data_str = "03 03 02 0B 4C C7 41"
-                elif recv_data_str == "03030102000125D4":
+                elif recv_data_str == "03030102000125d4":
                     # 查询温度_03
                     send_data_str = "03 03 02 01 20 C1 CC"
-                elif recv_data_str == "FF0302000001906C":
+                elif recv_data_str == "FF0302000001906c":
                     # 查询设备地址
                     send_data_str = "FF 03 02 00 01 50 50"
 
@@ -62,6 +62,6 @@ def work_msg(tcp_client):
 # tcp_client_1.close()
 
 if __name__ == "__main__":
-    local_port = 3001
+    local_port = 11000
     tcp_client = init_connect('127.0.0.1', 10123, local_port)
     work_msg(tcp_client)
