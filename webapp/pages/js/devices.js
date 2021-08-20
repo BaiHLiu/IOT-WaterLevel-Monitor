@@ -100,14 +100,15 @@ function add_device() {
 }
 
 
-
-function send_add_device(dev_name){
+function send_add_device(dev_name) {
     /*向后台发送新增设备请求*/
     $.ajax({
         type: "GET",
         url: config.web_api + "/add_device",
         data: {
             'dev_name': dev_name,
+            'username': localStorage.getItem('username'),
+            'password': localStorage.getItem('password')
         },
         dataType: "json",
         success: function (data) {

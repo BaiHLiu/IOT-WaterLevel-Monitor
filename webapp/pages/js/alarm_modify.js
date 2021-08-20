@@ -7,7 +7,7 @@ function render_card() {
         type: "GET",
         url: config.web_api + "/get_devices_config",
         dataType: "json",
-        data:{'dev_id':getQueryVariable('dev_id')},
+        data: {'dev_id': getQueryVariable('dev_id')},
         success: function (data) {
             if (data.code == '0') {
                 var devices_info = data.body;
@@ -18,18 +18,18 @@ function render_card() {
 
                 if (alert_params.length == 1) {
                     // 无配置
-                    card.find('#max-line').attr('value',0);
-                    card.find('#min-line').attr('value',0);
-                    card.find('#change-time').attr('value',0);
-                    card.find('#change-level').attr('value',0);
+                    card.find('#max-line').attr('value', 0);
+                    card.find('#min-line').attr('value', 0);
+                    card.find('#change-time').attr('value', 0);
+                    card.find('#change-level').attr('value', 0);
                 } else {
-                    card.find('#max-line').attr('value',alert_params[0]);
-                    card.find('#min-line').attr('value',alert_params[1]);
-                    card.find('#change-time').attr('value',alert_params[2]);
-                    card.find('#change-level').attr('value',alert_params[3]);
+                    card.find('#max-line').attr('value', alert_params[0]);
+                    card.find('#min-line').attr('value', alert_params[1]);
+                    card.find('#change-time').attr('value', alert_params[2]);
+                    card.find('#change-level').attr('value', alert_params[3]);
 
                 }
-            card.find('#save-button').attr('onclick','save_alarm();');
+                card.find('#save-button').attr('onclick', 'save_alarm();');
 
             } else {
                 console.log(data);
@@ -44,23 +44,25 @@ function render_card() {
 }
 
 
-function save_alarm(){
+function save_alarm() {
     var card = $('#alarm-control');
     var max_line = card.find('#max-line').val();
     var min_line = card.find('#min-line').val();
     var change_time = card.find('#change-time').val();
     var change_level = card.find('#change-level').val();
 
-        $.ajax({
+    $.ajax({
         type: "GET",
         url: config.web_api + "/set_alarm",
         dataType: "json",
-        data:{
-            'dev_id':getQueryVariable('dev_id'),
-            'high_line':max_line,
-            'low_line':min_line,
-            'change_time':change_time,
-            'change_level':change_level
+        data: {
+            'dev_id': getQueryVariable('dev_id'),
+            'high_line': max_line,
+            'low_line': min_line,
+            'change_time': change_time,
+            'change_level': change_level,
+            'username': localStorage.getItem('username'),
+            'password': localStorage.getItem('password')
         },
         success: function (data) {
             if (data.code == '0') {

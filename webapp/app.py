@@ -4,19 +4,62 @@
 # @Author  : Catop
 # @File    : app.py
 # @Software: flask后端主程序
+import functools
 import json
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session, make_response
 from flask_cors import *
 import time
 import dbconn
+import os
 import rt_report
 import sys
-sys.path.append("..") 
+import functools
+
+sys.path.append("..")
 from conf import Config
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+app.config["SECRET_KEY"] = os.urandom(20)
+
+
+
+def admin_auth(func):
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        username = request.args.get('username')
+        password = request.args.get('password')
+        if (not username) or (not password):
+            return jsonify({'code': -2, 'msg': "用户未登录", 'body': None})
+        else:
+            if username == Config.user['admin']['username'] and password==Config.user['admin']['password']:
+                return func(*args, **kwargs)
+
+    return inner
+
+
+@app.route('/login')
+def login():
+    """用户登陆"""
+    ret_dict = {'code': 0, 'msg': "", 'body': None}
+    username = request.args.get('username')
+    password = request.args.get('password')
+
+    if username and password:
+        if (username == Config.user['admin']['username']) and (password == Config.user['admin']['password']):
+            # 管理登陆
+            session['username'] = username
+
+            return jsonify(ret_dict)
+        elif (username == Config.user['viewer']['username']) and (password == Config.user['viewer']['password']):
+            # 查看者登陆
+            session['username'] = username
+            return jsonify(ret_dict)
+
+    ret_dict['code'] = -2
+    return jsonify(ret_dict)
+
 
 
 @app.route('/get_devices_info')
@@ -36,7 +79,7 @@ def get_devices_info():
             'ip': None,
             'interval_time': dev[6],
             'data': [],
-            'if_alarm' : False
+            'if_alarm': False
         }
         # 获取最新上报信息
         dev_upload_msg = dbconn.get_newest_record(dev[0])
@@ -47,10 +90,11 @@ def get_devices_info():
             for sens in dev_upload_msg:
                 sen_info = {
                     'high_level': dbconn.get_water_level(sens['sensor_id'], sens['distance']),
-                    'water_depth' : dbconn.get_water_level(sens['sensor_id'], sens['distance']) - dbconn.get_sensor_info(sens['sensor_id'])[6],
+                    'water_depth': dbconn.get_water_level(sens['sensor_id'], sens['distance']) -
+                                   dbconn.get_sensor_info(sens['sensor_id'])[6],
                     'temperature': sens['temperature'],
                     'sensor_name': dbconn.get_sensor_info(sens['sensor_id'])[1],
-                    'sensor_id' : sens['sensor_id']
+                    'sensor_id': sens['sensor_id']
 
                 }
                 dev_info['data'].append(sen_info)
@@ -131,6 +175,7 @@ def get_sensors_config():
 
 
 @app.route('/modify_device_config')
+@admin_auth
 def modify_device_config():
     """修改指定设备配置信息"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -144,17 +189,17 @@ def modify_device_config():
     temperature_query_arg = request.args.get('temperature_query_arg')
 
     try:
-        dbconn.modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time, distance_query_arg, temperature_query_arg)
+        dbconn.modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time, distance_query_arg,
+                                    temperature_query_arg)
     except:
         ret_dict['code'] = -1
         ret_dict['msg'] = "修改配置信息失败"
-
-
 
     return jsonify(ret_dict)
 
 
 @app.route('/modify_sensor_config')
+@admin_auth
 def modify_sensor_config():
     """修改传感器配置"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -174,6 +219,7 @@ def modify_sensor_config():
 
 
 @app.route('/add_sensor')
+@admin_auth
 def add_sensor():
     """新增传感器"""
     # 用户添加传感器时只需要输入名称，其他配置使用"修改配置"接口
@@ -191,6 +237,7 @@ def add_sensor():
 
 
 @app.route('/rm_sensor')
+@admin_auth
 def rm_sensor():
     """删除传感器"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -205,6 +252,7 @@ def rm_sensor():
 
 
 @app.route('/add_device')
+@admin_auth
 def add_device():
     """新增串口服务器"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -212,7 +260,7 @@ def add_device():
     dev_name = request.args.get('dev_name')
 
     try:
-        dbconn.add_dev(dev_name,'',10,'','','')
+        dbconn.add_dev(dev_name, '', 10, '', '', '')
     except:
         ret_dict['code'] = -1
 
@@ -220,6 +268,7 @@ def add_device():
 
 
 @app.route('/rm_device')
+@admin_auth
 def rm_device():
     """删除串口服务器"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -234,6 +283,7 @@ def rm_device():
 
 
 @app.route('/set_offset')
+@admin_auth
 def set_offset():
     """设置偏移值"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
@@ -261,7 +311,7 @@ def get_distance():
     except:
         ret_dict['code'] = -1
 
-    return  jsonify(ret_dict)
+    return jsonify(ret_dict)
 
 
 @app.route('/get_period_history')
@@ -275,21 +325,19 @@ def get_peroid_history():
     sensor_id = request.args.get('sensor_id')
     time_start = request.args.get('time_start')
     time_end = request.args.get('time_end')
-    limit = request.args.get('limit')           # limit可选参数
-    if(limit):
+    limit = request.args.get('limit')  # limit可选参数
+    if (limit):
         HISTORY_LIMIT = int(limit)
-
-
 
     sql_ret = dbconn.get_period_record(sensor_id, time_start, time_end)
 
     # 从查询结果中平均截取指定条记录
     seleted_idx = []
-    if(len(sql_ret) <= HISTORY_LIMIT):
+    if (len(sql_ret) <= HISTORY_LIMIT):
         for i in range(0, len(sql_ret)):
             seleted_idx.append(i)
     else:
-        for i in range(0, len(sql_ret), int(len(sql_ret)/HISTORY_LIMIT)):
+        for i in range(0, len(sql_ret), int(len(sql_ret) / HISTORY_LIMIT)):
             seleted_idx.append(i)
 
     seleted_idx = seleted_idx[0:HISTORY_LIMIT]
@@ -301,12 +349,12 @@ def get_peroid_history():
     format_code = 0
     format_start_idx = 0
     format_end_idx = -1
-    if(time_delta <= 60*60*24):
+    if (time_delta <= 60 * 60 * 24):
         # 不满1天，显示 小时：分钟
         format_code = 0
         format_start_idx = 11
         format_end_idx = 16
-    elif(time_delta <= 60*60*24*365):
+    elif (time_delta <= 60 * 60 * 24 * 365):
         # 不满1年，显示 月份-天数
         format_code = 1
         format_start_idx = 5
@@ -320,11 +368,11 @@ def get_peroid_history():
     # 遍历sql结果，符合条件的选出
     i = 0
     for rec in sql_ret:
-        if(i in seleted_idx):
+        if (i in seleted_idx):
             record = {
                 'id': i,
-                'datetime' : rec[6][format_start_idx:format_end_idx],
-                'waterlevel' : dbconn.get_water_level(sensor_id, rec[4])
+                'datetime': rec[6][format_start_idx:format_end_idx],
+                'waterlevel': dbconn.get_water_level(sensor_id, rec[4])
             }
 
             ret_dict['body'].append(record)
@@ -345,8 +393,8 @@ def homepage_history():
             dev_id = dev[0]
             sensors = dbconn.get_sensors(dev_id)
             for sen in sensors:
-                if(sen[5] == 1):
-                    sen_his = {'sensor_id':sen[0], 'sensor_name':sen[1], 'bind_dev_name':dev[1]}
+                if (sen[5] == 1):
+                    sen_his = {'sensor_id': sen[0], 'sensor_name': sen[1], 'bind_dev_name': dev[1]}
                     ret_dict['body'].append(sen_his)
     except:
         ret_dict['code'] = -1
@@ -355,6 +403,7 @@ def homepage_history():
 
 
 @app.route('/set_ground_level')
+@admin_auth
 def set_ground_level():
     """设置底板海拔"""
     ret_dict = {'code': 0, 'msg': "", 'body': []}
@@ -370,6 +419,7 @@ def set_ground_level():
 
 
 @app.route('/set_alarm')
+@admin_auth
 def set_alarm():
     """设置报警参数"""
     ret_dict = {'code': 0, 'msg': "", 'body': []}
@@ -385,7 +435,7 @@ def set_alarm():
     except:
         ret_dict['code'] = -1
 
-    return  jsonify(ret_dict)
+    return jsonify(ret_dict)
 
 
 @app.route('/generate_rt_report')
@@ -399,4 +449,3 @@ def generate_rt_report():
 
 if __name__ == '__main__':
     app.run(host=Config.web_app['bind_address'], port=Config.web_app['bind_port'])
-

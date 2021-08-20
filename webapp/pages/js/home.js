@@ -1,5 +1,5 @@
 window.onload = function () {
-    console.log("hello!");
+    check_login();
     ready_realtime_cards();
 
     get_devices_info();
@@ -9,6 +9,18 @@ window.onload = function () {
 
     get_history_chart();
 
+}
+
+
+function check_login() {
+    // 检查登陆状态
+    // 伪装登陆
+    if(localStorage.getItem('username')){
+        cocoMessage.success("登陆成功",1000);
+    }
+    else{
+        location.href='./login.html';
+    }
 }
 
 function ready_realtime_cards() {
@@ -92,7 +104,7 @@ function get_devices_info() {
                         card.find('.rt-water-depth').text((sensors[0]['water_depth'] / 1000).toFixed(2) + " M / " + (sensors[1]['water_depth'] / 1000).toFixed(2) + " M");
                     }
                     // 警戒水位超限状态
-                    if(data[i]['if_alarm'] == true){
+                    if (data[i]['if_alarm'] == true) {
                         card.find('.card-dev-alarm').text('[超警戒水位]')
                     }
 

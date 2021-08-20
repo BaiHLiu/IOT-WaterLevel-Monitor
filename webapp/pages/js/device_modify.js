@@ -53,6 +53,8 @@ function change_device_config() {
         'distance_query_arg': distance,
         'temperature_query_arg': temperature,
         'alarm_params': '',
+        'username': localStorage.getItem('username'),
+        'password': localStorage.getItem('password')
         // TODO:添加报警参数
     }
 
@@ -141,7 +143,9 @@ function change_sensor_config(sensor_id) {
         'sensor_name': sensor_name,
         'distance_offset': offset,
         'hex_address': sensor_address,
-        'home_graph': is_home_graph
+        'home_graph': is_home_graph,
+        'username': localStorage.getItem('username'),
+        'password': localStorage.getItem('password')
 
     }
 
@@ -201,7 +205,9 @@ function send_add_sensor(bind_dev_id, sensor_name) {
         url: config.web_api + "/add_sensor",
         data: {
             'sensor_name': sensor_name,
-            'bind_dev_id': bind_dev_id
+            'bind_dev_id': bind_dev_id,
+            'username': localStorage.getItem('username'),
+            'password': localStorage.getItem('password')
         },
         dataType: "json",
         success: function (data) {
@@ -238,7 +244,9 @@ function rm_sensor(sensor_id) {
                 type: "GET",
                 url: config.web_api + "/rm_sensor",
                 data: {
-                    'sensor_id': sensor_id
+                    'sensor_id': sensor_id,
+                    'username': localStorage.getItem('username'),
+                    'password': localStorage.getItem('password')
                 },
                 dataType: "json",
                 success: function (data) {
@@ -271,7 +279,9 @@ function rm_device() {
         type: "GET",
         url: config.web_api + "/rm_device",
         data: {
-            'dev_id': dev_id
+            'dev_id': dev_id,
+            'username': localStorage.getItem('username'),
+            'password': localStorage.getItem('password')
         },
         dataType: "json",
         success: function (data) {
@@ -321,7 +331,9 @@ function set_offset(sensor_id) {
                 url: config.web_api + "/set_offset",
                 data: {
                     'sensor_id': sensor_id,
-                    'offset': parseInt(get_distance(sensor_id)) + parseInt(inputValue)
+                    'offset': parseInt(get_distance(sensor_id)) + parseInt(inputValue),
+                    'username': localStorage.getItem('username'),
+                    'password': localStorage.getItem('password')
                 },
                 dataType: "json",
                 success: function (data) {
@@ -369,7 +381,9 @@ function set_ground_level(sensor_id) {
                 url: config.web_api + "/set_ground_level",
                 data: {
                     'sensor_id': sensor_id,
-                    'ground_level': inputValue
+                    'ground_level': inputValue,
+                    'username': localStorage.getItem('username'),
+                    'password': localStorage.getItem('password')
                 },
                 dataType: "json",
                 success: function (data) {
