@@ -92,11 +92,21 @@ def get_device():
 def get_devices_config():
     """获取设备配置信息"""
     ret_dict = {'code': 0, 'msg': "", 'body': None}
-    try:
-        ret_dict['body'] = dbconn.get_all_dev_info()
-    except:
-        ret_dict['code'] = -1
-        ret_dict['msg'] = "获取设备配置信息失败"
+    dev_id = request.args.get('dev_id')
+    if dev_id:
+        try:
+            ret_dict['body'] = dbconn.get_dev_by_id(int(dev_id))
+        except:
+            ret_dict['code'] = -1
+            ret_dict['msg'] = "获取设备配置信息失败"
+
+    else:
+
+        try:
+            ret_dict['body'] = dbconn.get_all_dev_info()
+        except:
+            ret_dict['code'] = -1
+            ret_dict['msg'] = "获取设备配置信息失败"
 
     return jsonify(ret_dict)
 
@@ -368,6 +378,8 @@ def set_alarm():
         ret_dict['code'] = -1
 
     return  jsonify(ret_dict)
+
+
 
 
 if __name__ == '__main__':

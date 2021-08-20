@@ -5,7 +5,7 @@ window.onload = function () {
     get_devices_info();
     setInterval(function () {
         get_devices_info();
-    }, 2000);
+    }, 5000);
 
     get_history_chart();
 
@@ -67,10 +67,10 @@ function get_devices_info() {
                     var current_time = getCurrentTime();
                     var time_delta = get_time_delta(current_time, update_time);
 
-                    if (time_delta > 5 * interval_time) {
+                    if (time_delta > 50 * interval_time) {
 
                         // cocoMessage.error("有离线设备", 3000);
-                        //5次以上上报失败
+                        //50次以上上报失败
                         card.find('#status_icon').removeClass();
                         card.find('#status_icon').addClass('fas fa-close fa-2x text-danger');
                     } else {

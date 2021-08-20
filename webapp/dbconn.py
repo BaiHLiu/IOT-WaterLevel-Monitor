@@ -42,6 +42,17 @@ def get_all_dev_info():
     return rets
 
 
+def get_dev_by_id(dev_id):
+    """查询指定id的设备信息"""
+    cur = conn.cursor()
+    sql = "SELECT * FROM dev_info WHERE dev_id=?"
+    params = [dev_id]
+    cur.execute(sql, params)
+    rets = cur.fetchone()
+
+    return rets
+
+
 def get_dev_id(dev_port):
     """查询指定端口设备的id"""
     cur = conn.cursor()
@@ -96,7 +107,7 @@ def get_newest_record(dev_id, number=1):
         params = [dev_id, sens[0]]
         cur.execute(sql, params)
         sql_ret = cur.fetchone()
-        if(sql_ret):
+        if (sql_ret):
             sensor_record = {
                 'dev_ip': sql_ret[2],
                 'sensor_id': sql_ret[3],
@@ -116,7 +127,7 @@ def get_recent_records(dev_id, number):
     cur = conn.cursor()
     sensor_number = len(get_sensors(dev_id))
     sql = "SELECT * FROM upload_log WHERE dev_id=? ORDER BY datetime DESC LIMIT ?"
-    params = [dev_id, number*sensor_number]
+    params = [dev_id, number * sensor_number]
     cur.execute(sql, params)
 
     sql_ret = cur.fetchall()
@@ -126,14 +137,13 @@ def get_recent_records(dev_id, number):
         sensor_name = get_sensor_info(sensor_id)[1]
         if (sensor_name in ret_dict.keys()):
             ret_dict[sensor_name].append((
-                get_water_level(sensor_id,log[4]),log[5],log[6]
+                get_water_level(sensor_id, log[4]), log[5], log[6]
             ))
         else:
             ret_dict[sensor_name] = []
             ret_dict[sensor_name].append((
-                get_water_level(sensor_id,log[4]),log[5],log[6]
+                get_water_level(sensor_id, log[4]), log[5], log[6]
             ))
-
 
     return ret_dict
 
@@ -171,7 +181,8 @@ def get_sensor_info(sensor_id):
     return cur.fetchone()
 
 
-def modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time, distance_query_arg, temperature_query_arg):
+def modify_device_config(dev_id, dev_name, dev_port, alarm_params, interval_time, distance_query_arg,
+                         temperature_query_arg):
     """修改设备信息"""
     cur = conn.cursor()
     sql = "UPDATE dev_info SET dev_name=?,dev_port=?,alarm_params=?,interval_time=?,distance_query_arg=?,temperature_query_arg=? " \
@@ -193,7 +204,6 @@ def modify_sensor_config(sensor_id, sensor_name, distance_offset, hex_address, h
     conn.commit()
 
 
-
 def rm_sensor(sensor_id):
     """删除传感器"""
     cur = conn.cursor()
@@ -203,6 +213,7 @@ def rm_sensor(sensor_id):
     cur.execute(sql, params)
 
     conn.commit()
+
 
 def rm_device(dev_id):
     """删除串口服务器"""
@@ -265,9 +276,6 @@ def set_alarm_param(dev_id, max_level, min_level, time_delta, level_delta):
     conn.commit()
 
 
-
-
-
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
     # print(get_all_dev_info()[0])
@@ -288,7 +296,7 @@ if __name__ == "__main__":
 
     # rm_sensor(8)
     # print(get_all_dev_info())
-    #modify_device_config(4, "新名称5", 2002, '',5, "03 01 00 00 01", "03 01 02 00 01")
+    # modify_device_config(4, "新名称5", 2002, '',5, "03 01 00 00 01", "03 01 02 00 01")
 
     # add_dev('hello', '', 10, '', '', '')
     print(get_sensor_distance(3))
