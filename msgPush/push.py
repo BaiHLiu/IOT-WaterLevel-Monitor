@@ -4,11 +4,7 @@
 # @Author  : Catop
 # @File    : push.py
 # @Software: 消息推送模块
-import sys
 from wxpusher import WxPusher
-sys.path.append("..")
-from conf import Config
-from msgPush import push
 from conf import Config
 
 def send_message(content):
