@@ -84,12 +84,12 @@ function get_devices_info() {
                     var sensors = data[i]['data'];
                     card.find('.distance-1').text((sensors[0]['high_level'] / 1000).toFixed(2) + " M");
                     card.find('.sensor-1').text(sensors[0]['sensor_name']);
-                    card.find('.rt-water-depth').text((sensors[0]['water_depth']/1000).toFixed(2)+" M");
+                    card.find('.rt-water-depth').text((sensors[0]['water_depth'] / 1000).toFixed(2) + " M");
                     if (sensors.length == 2) {
                         // 双传感器情况
                         card.find('.distance-2').text((sensors[1]['high_level'] / 1000).toFixed(2) + " M");
                         card.find('.sensor-2').text(sensors[1]['sensor_name']);
-                        card.find('.rt-water-depth').text((sensors[0]['water_depth']/1000).toFixed(2)+" M / "+(sensors[1]['water_depth']/1000).toFixed(2)+" M");
+                        card.find('.rt-water-depth').text((sensors[0]['water_depth'] / 1000).toFixed(2) + " M / " + (sensors[1]['water_depth'] / 1000).toFixed(2) + " M");
                     }
 
                 }
@@ -184,17 +184,17 @@ function get_history_chart() {
         serie = {
             name: name,
             type: 'line',
-            stack: '水位'+i,
-            data: []
+            stack: '水位' + i,
+            data: [],
         }
 
         for (j = 0; j < ret_list[i]['history'].length; j++) {
-            var time = (ret_list[i]['history'][j]['waterlevel']/1000).toFixed(2);
+            var time = (ret_list[i]['history'][j]['waterlevel'] / 1000).toFixed(2);
             serie['data'].push(time);
 
             // 临时按照取第一个传感器的时间
             // TODO:图表传感器时间显示处理
-            if(title_time_flag == 0){
+            if (title_time_flag == 0) {
                 var title_time = ret_list[0]['history'][j]['datetime'];
                 ret_time.push(title_time);
             }
@@ -206,7 +206,7 @@ function get_history_chart() {
 
 
     // console.log(ret_series);
-    console.log(ret_time);
+    // console.log(ret_time);
     render_history_chart(ret_title, ret_time, ret_series);
 
 }
@@ -214,14 +214,19 @@ function get_history_chart() {
 
 // 渲染首页历史记录图表
 function render_history_chart(ret_title, ret_times, ret_series) {
-    console.log(ret_series);
+    // console.log(ret_series);
     var myChart = echarts.init(document.getElementById('history-chart'));
     // 指定图表的配置项和数据
     option = {
         title: {},
         tooltip: {
-            trigger: 'axis'
-
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
         },
         legend: {
             data: ret_title
