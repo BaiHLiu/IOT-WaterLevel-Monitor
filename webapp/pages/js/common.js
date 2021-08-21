@@ -103,3 +103,9 @@ function get_befor_time(time_delta){
 
     return curTime;
 }
+
+function getTimeStamp(){
+    // 获取时间戳
+    var timestamp = (new Date()).valueOf();
+    return timestamp
+}

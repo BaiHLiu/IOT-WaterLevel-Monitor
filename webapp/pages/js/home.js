@@ -300,6 +300,18 @@ function generate_rt_table() {
 
 function render_image() {
     // 处理图片预览
+
+    // 防止文件缓存
+    var nonce = parseInt(Math.random()*1000000000)
+    $('#viewer').children().each(function (i,n){
+        var obj = $(n);
+        url = obj.find('.img-responsive').attr('data-original')
+        var nonce = parseInt(Math.random()*1000000000);
+        obj.find('.img-responsive').attr('data-original', url+'?nonce='+nonce);
+        obj.find('.img-responsive').attr('src', url+'?nonce='+nonce);
+    })
+
+
     var viewer = new Viewer(document.getElementById('viewer'), {
         url: 'data-original'
     });
