@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>用户登陆</title>
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/google-fonts.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/fontawesome5-overrides.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="./assets/js/coco-message.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.common.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/login.js"></script>
+</head>
+
+<body class="bg-gradient-primary">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-flex">
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center" style="margin-bottom: 30px">
+                                    <h4 class="text-dark mb-4">请登录系统</h4>
+                                    <h6>昌邑市潍河防潮蓄水闸服务所</h6>
+                                    <h6>智慧河道水位集中监控平台</h6>
+                                </div>
+                                <form class="user">
+                                    <div class="mb-3"><input class="form-control form-control-user" type="text"
+                                                             id="username" aria-describedby="emailHelp"
+                                                             placeholder="用户名" name="email"></div>
+                                    <div class="mb-3"><input class="form-control form-control-user" type="password"
+                                                             id="password" placeholder="密码" name="password"></div>
+                                    <div class="mb-3">
+                                        <div class="custom-control custom-checkbox small">
+                                            <div class="form-check"><input class="form-check-input custom-control-input"
+                                                                           type="checkbox" id="formCheck-1"><label
+                                                    class="form-check-label custom-control-label"
+                                                    for="formCheck-1">记住登陆</label></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary d-block btn-user w-100" type="button"
+                                            onclick="login()">登陆
+                                    </button>
+
+                                    <hr>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-transparent sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright" style="color: lightsteelblue">
+                    <span>Copyright © Catop 2021</span>
+                    <br>
+                    <br>
+                    <span>鲁ICP备20012845号</span>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+<script src="assets/js/bs-init.js"></script>
+<script src="assets/js/theme.js"></script>
+</body>
+
+</html>

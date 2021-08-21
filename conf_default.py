@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2021/8/14 10:32 下午
+# @Time    : 2021/8/16 3:04 下午
 # @Author  : Catop
-# @File    : conf.py
+# @File    : pushconf_default.py
 # @Software: PyCharm
+
 
 class Config:
     tcp_server = {
@@ -21,4 +22,9 @@ class Config:
     web_app = {
         "bind_address": "0.0.0.0",
         "bind_port": 5002
+    }
+
+    msg_push = {
+        "topic_ids": [''],
+        "token": ''
     }

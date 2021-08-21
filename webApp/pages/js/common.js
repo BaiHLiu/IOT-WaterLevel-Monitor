@@ -71,3 +71,41 @@ function zeroFill(i){
         return i;
     }
 }
+
+
+
+function getQueryVariable(variable)
+/*获取url请求参数*/
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+
+function get_befor_time(time_delta){
+    /*获取当前时间之前time_delta的时间字符串*/
+    var now = new Date();//当前时间
+    var date = new Date((now.getTime()/1000 - time_delta) * 1000)
+    var month = zeroFill(date.getMonth() + 1);//月
+    var day = zeroFill(date.getDate());//日
+    var hour = zeroFill(date.getHours());//时
+    var minute = zeroFill(date.getMinutes());//分
+    var second = zeroFill(date.getSeconds());//秒
+
+    //当前时间
+    var curTime = date.getFullYear() + "-" + month + "-" + day
+            + " " + hour + ":" + minute + ":" + second;
+
+    return curTime;
+}
+
+function getTimeStamp(){
+    // 获取时间戳
+    var timestamp = (new Date()).valueOf();
+    return timestamp
+}
