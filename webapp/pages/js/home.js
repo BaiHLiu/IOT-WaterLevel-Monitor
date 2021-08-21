@@ -8,7 +8,7 @@ window.onload = function () {
     }, 5000);
 
     get_history_chart();
-
+    render_image();
 }
 
 
@@ -16,7 +16,7 @@ function check_login() {
     // 检查登陆状态
     // 伪装登陆
     if (localStorage.getItem('username')) {
-        cocoMessage.success("登陆成功", 1000);
+        cocoMessage.success("登陆成功", 1500);
     } else {
         location.href = './login.html';
     }
@@ -91,6 +91,8 @@ function get_devices_info() {
                     //温度显示
                     var temperature = ((data[i]['data'][0]['temperature']) / 10).toFixed(1);
                     card.find('.rt-temp').text(temperature);
+                    // 视频播放按钮
+                    card.find('.img-play').attr('href','#img-'+data[i]['name']);
                     // 传感器
                     var sensors = data[i]['data'];
                     card.find('.distance-1').text((sensors[0]['high_level'] / 1000).toFixed(2) + " M");
@@ -282,7 +284,7 @@ function generate_rt_table() {
             // console.log(data);
             if (data.code == '0') {
 
-                window.location.href = './static/rt-table/'+data.body;
+                window.location.href = './static/rt-table/' + data.body;
             } else {
 
                 cocoMessage.error("生成报表失败", 3000);
@@ -292,5 +294,13 @@ function generate_rt_table() {
         error: function (jqXHR) {
             cocoMessage.error("请求后台接口失败！", 3000);
         },
+    });
+}
+
+
+function render_image() {
+    // 处理图片预览
+    var viewer = new Viewer(document.getElementById('viewer'), {
+        url: 'data-original'
     });
 }

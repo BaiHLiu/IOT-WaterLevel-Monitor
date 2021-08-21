@@ -20,7 +20,7 @@ def get_img_from_camera_net(folder_path):
 
             cap = cv2.VideoCapture(url)  # 获取网络摄像机
             ret, frame = cap.read()
-            cv2.imshow("capture", frame)
+            # cv2.imshow("capture", frame)
             file_name = f'{name}.jpg'
             cv2.imwrite(folder_path + file_name, frame, [cv2.IMWRITE_JPEG_QUALITY,80])  # 存储为图像
             cap.release()

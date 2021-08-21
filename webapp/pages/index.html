@@ -13,6 +13,8 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="./assets/js/coco-message.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.common.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/viewerjs/1.10.1/viewer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/viewerjs/1.10.1/viewer.min.js"></script>
 
     <script src="./js/home.js"></script>
     <script src="./js/common.js"></script>
@@ -77,33 +79,13 @@
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><i class="fas fa-bell fa-fw"></i></a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header">alerts center</h6><a
+                                    <h6 class="dropdown-header">通知中心</h6><a
                                         class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="me-3">
-                                        <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i>
-                                        </div>
+                                        暂无新消息
                                     </div>
-                                    <div><span class="small text-gray-500">December 12, 2019</span>
-                                        <p>A new monthly report is ready to download!</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="me-3">
-                                        <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div><span class="small text-gray-500">December 7, 2019</span>
-                                        <p>$290.29 has been deposited into your account!</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="me-3">
-                                        <div class="bg-warning icon-circle"><i
-                                                class="fas fa-exclamation-triangle text-white"></i></div>
-                                    </div>
-                                    <div><span class="small text-gray-500">December 2, 2019</span>
-                                        <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                    </div>
-                                </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All
-                                    Alerts</a>
+
+                                </a><a class="dropdown-item text-center small text-gray-500" href="#">显示所有通知</a>
                                 </div>
                             </div>
                         </li>
@@ -112,51 +94,7 @@
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><i
                                     class="fas fa-envelope fa-fw"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header">alerts center</h6><a
-                                        class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="assets/img/avatars/avatar4.jpeg">
-                                        <div class="bg-success status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span>
-                                        </div>
-                                        <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="assets/img/avatars/avatar2.jpeg">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate">
-                                            <span>I have the photos that you ordered last month!</span></div>
-                                        <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="assets/img/avatars/avatar3.jpeg">
-                                        <div class="bg-warning status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span>
-                                        </div>
-                                        <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="assets/img/avatars/avatar5.jpeg">
-                                        <div class="bg-success status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span>
-                                        </div>
-                                        <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                    </div>
-                                </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All
-                                    Alerts</a>
-                                </div>
+
                             </div>
                             <div class="shadow dropdown-list dropdown-menu dropdown-menu-end"
                                  aria-labelledby="alertsDropdown"></div>
@@ -166,20 +104,20 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small">闸服所</span><img
                                     class="border rounded-circle img-profile"
                                     src="assets/img/avatars/85C6534700ACA3734F02CBF3899C8F36.png"
                                     style="padding-right: 0;"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
                                         class="dropdown-item" href="#"><i
-                                        class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a
+                                        class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;资料</a><a
                                         class="dropdown-item" href="#"><i
-                                        class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a><a
+                                        class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;设置</a><a
                                         class="dropdown-item" href="#"><i
-                                        class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
+                                        class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;操作记录</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i
-                                            class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                            class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;退出登陆</a>
                                 </div>
                             </div>
                         </li>
@@ -228,6 +166,7 @@
                                 <div>
                                     <small style="font-size: 10px;margin-left: 6px;display: inline-block"><span>更新时间：</span><span
                                             class="rt-update-time"></span></small>
+                                    <small style="font-size: 10px;margin-left: 6px;display: inline-block;float: right;margin-top: 4px"><a class="img-play" href="" style="text-decoration: none">实况视频&nbsp;&nbsp;&nbsp;</a><i class="fas fa-play-circle"></i></small>
                                 </div>
 
                             </div>
@@ -282,7 +221,7 @@
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card textwhite bg-success text-white shadow">
-                                        <div class="card-body">
+                                        <div class="card-body" onclick="location.href='#rt-img'">
                                             <p class="m-0">查看实况监控</p>
                                             <p class="text-white-50 small m-0">每10秒将自动抓取一张现场图片</p>
                                         </div>
@@ -290,7 +229,7 @@
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card textwhite bg-info text-white shadow">
-                                        <div class="card-body">
+                                        <div class="card-body" onclick="location.href='./history.html'">
                                             <p class="m-0">历史记录查询</p>
                                             <p class="text-white-50 small m-0">查询各个监测点的历史记录</p>
                                         </div>
@@ -302,9 +241,9 @@
 
 
                     <div class="col-lg-5 col-xl-4">
-                        <div class="card shadow mb-4">
+                        <div class="card shadow mb-4" id="rt-img">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">异常信息</h6>
+                                <h6 class="text-primary fw-bold m-0">实况视频</h6>
                                 <div class="dropdown no-arrow">
                                     <button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
                                             data-bs-toggle="dropdown" type="button"><i
@@ -320,109 +259,27 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Direct&quot;,&quot;Social&quot;,&quot;Referral&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas>
-                                </div>
-                                <div class="text-center small mt-4"><span class="me-2"><i
-                                        class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="me-2"><i
-                                        class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="me-2"><i
-                                        class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
+                                <p>点击图片放大预览</p>
+                                <ul id="viewer" style="list-style-type: none; margin:0; padding: 0">
+                                    <li style="margin-bottom: 10px" id="img-城东"><img class="img-responsive" style="max-width: 100%; height: auto"
+                                             data-original="http://static.catop.top:8001/wateriot/img%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
+                                             src="http://static.catop.top:8001/wateriot/img%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
+                                             alt="城东-闸前"></li>
+                                    <li style="margin-bottom: 10px" id="img-金口"><img class="img-responsive" style="max-width: 100%; height: auto"
+                                             data-original="http://static.catop.top:8001/wateriot/img%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
+                                             src="http://static.catop.top:8001/wateriot/img%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
+                                             alt="金口-闸前"></li>
+                                    <li style="margin-bottom: 10px" id="img-丰产河"><img class="img-responsive" style="max-width: 100%; height: auto"
+                                             data-original="http://static.catop.top:8001/wateriot/img%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
+                                             src="http://static.catop.top:8001/wateriot/img%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
+                                             alt="丰产河-闸前"></li>
+                                    <li style="margin-bottom: 10px" id="img-柳疃"><img class="img-responsive" style="max-width: 100%; height: auto"
+                                             data-original="http://static.catop.top:8001/wateriot/img%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
+                                             src="http://static.catop.top:8001/wateriot/img%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
+                                             alt="柳疃-闸前"></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 mb-4">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="text-primary fw-bold m-0">Projects</h6>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="small fw-bold">Server migration<span class="float-end">20%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 20%;"><span
-                                            class="visually-hidden">20%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Sales tracking<span class="float-end">40%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 40%;"><span
-                                            class="visually-hidden">40%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Customer Database<span class="float-end">60%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 60%;"><span
-                                            class="visually-hidden">60%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Payout Details<span class="float-end">80%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 80%;"><span
-                                            class="visually-hidden">80%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Account setup<span class="float-end">Complete!</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 100%;"><span
-                                            class="visually-hidden">100%</span></div>
-                                </div>
-                            </div>
-                        </div>
 
-
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-primary text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Primary</p>
-                                        <p class="text-white-50 small m-0">#4e73df</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-success text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Success</p>
-                                        <p class="text-white-50 small m-0">#1cc88a</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-info text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Info</p>
-                                        <p class="text-white-50 small m-0">#36b9cc</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-warning text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Warning</p>
-                                        <p class="text-white-50 small m-0">#f6c23e</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-danger text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Danger</p>
-                                        <p class="text-white-50 small m-0">#e74a3b</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-secondary text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Secondary</p>
-                                        <p class="text-white-50 small m-0">#858796</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -430,7 +287,7 @@
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                <div class="text-center my-auto copyright"><span>Copyright © Catop 2021</span></div>
             </div>
         </footer>
     </div>
