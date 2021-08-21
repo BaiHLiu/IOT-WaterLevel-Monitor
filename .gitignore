@@ -6,3 +6,4 @@ conf.py
 /webapp/pages/js/config.js
 db.sqlite
 __pycache__/
+/imageCapture/camConf.py
