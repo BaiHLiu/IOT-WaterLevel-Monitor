@@ -9,6 +9,9 @@ import time
 import threading
 import socket
 import requests
+
+import sys
+sys.path.append("..")
 import httpAPI.utils as utils
 from conf import Config
 
