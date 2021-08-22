@@ -7,3 +7,4 @@ conf.py
 db.sqlite
 __pycache__/
 /imageCapture/camConf.py
+/docs/misc/

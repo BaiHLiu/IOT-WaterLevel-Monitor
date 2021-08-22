@@ -28,3 +28,14 @@ class Config:
         "topic_ids": [''],
         "token": ''
     }
+
+    user = {
+        "admin": {
+            "username": "admin",
+            "password": "12345"
+        },
+        "viewer": {
+            "username": "guest",
+            "password": "12345"
+        }
+    }
