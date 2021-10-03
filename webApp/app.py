@@ -12,13 +12,13 @@ from flask_cors import *
 import time
 import dbconn
 import os
-
-import redisCache.cache
-import rt_report
 import sys
-import functools
 
 sys.path.append("..")
+import redisCache.cache
+import rt_report
+import functools
+
 from conf import Config
 
 app = Flask(__name__)

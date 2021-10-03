@@ -12,7 +12,6 @@ import dbconn
 from flask_cors import *
 import sys
 import datetime
-xw
 sys.path.append("..")
 from conf import Config
 from msgPush import push
