@@ -464,7 +464,7 @@ def init_redis():
     for dev in dev_list:
         dev_datas = dbconn.get_newest_record(dev[0])
         for upload_log in dev_datas:
-            redisCache.cache.redis_add_log(upload_log['sensor_id'], dev[0], upload_log['dev_ip'], upload_log['distance'], upload_log['temperature'], upload_log['update_time'])
+            redisCache.cache.redis_add_log(upload_log['sensor_id'], dev[0], upload_log['dev_ip'], upload_log['distance'], upload_log['temperature'])
 
 if __name__ == '__main__':
     init_redis()
