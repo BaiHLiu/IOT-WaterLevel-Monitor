@@ -7,7 +7,7 @@
 
 import redis
 import sys
-import datetime
+from datetime import datetime
 
 sys.path.append("..")
 from httpAPI import dbconn as devDB
@@ -16,14 +16,14 @@ from webApp import dbconn as webDB
 rds = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
 
-def redis_add_log(sensor_id, dev_id, ip, distance, temperature, datetime):
+def redis_add_log(sensor_id, dev_id, ip, distance, temperature):
     sensor_info = webDB.get_sensor_info(sensor_id)
     logMap = {
         'dev_id': dev_id,
         'ip': ip,
         'distance': distance,
         'temperature': temperature,
-        'datetime': datetime,
+        'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'max_line': webDB.get_dev_by_id(dev_id)[4][1:-2].split(', ')[0],
         'offset': sensor_info[3],
         'home_graph': sensor_info[6],
@@ -58,6 +58,6 @@ def redis_get_newest_record(dev_id):
 
 
 if __name__ == '__main__':
-    print(redis_add_log(9, 13, '10.9.0.2', 3607, 304, '2021-08-12 10:31:33'))
-    print(redis_add_log(11, 13, '10.9.0.2', 3607, 304, '2021-08-12 10:31:33'))
+    print(redis_add_log(9, 13, '10.9.0.2', 3607, 304))
+    print(redis_add_log(11, 13, '10.9.0.2', 3607, 304))
     print(redis_get_newest_record(13))
