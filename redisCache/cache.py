@@ -26,7 +26,7 @@ def redis_add_log(sensor_id, dev_id, ip, distance, temperature, datetime):
         'datetime': datetime,
         'max_line': webDB.get_dev_by_id(dev_id)[4][1:-2].split(', ')[0],
         'offset': sensor_info[3],
-        'home_graph': sensor_info[5],
+        'home_graph': sensor_info[6],
         'sensor_name': sensor_info[1],
 
     }
