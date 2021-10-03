@@ -5,9 +5,9 @@ window.onload = function () {
     get_devices_info();
     setInterval(function () {
         get_devices_info();
-    }, 5000);
+    }, 10000);
 
-    get_history_chart();
+    // get_history_chart();
     render_image();
 }
 
@@ -210,7 +210,6 @@ function get_history_chart() {
             serie['data'].push(time);
 
             // 临时按照取第一个传感器的时间
-            // TODO:图表传感器时间显示处理
             if (title_time_flag == 0) {
                 var title_time = ret_list[0]['history'][j]['datetime'];
                 ret_time.push(title_time);

@@ -12,6 +12,8 @@ from flask_cors import *
 import time
 import dbconn
 import os
+
+import redisCache.cache
 import rt_report
 import sys
 import functools
@@ -68,9 +70,9 @@ def get_devices_info():
     ret_dict = []
     devs = dbconn.get_all_dev_info()
     # print(devs)
+
     for dev in devs:
-        # 获取警戒水位限
-        max_line = (dbconn.get_dev_by_id(dev[0])[4][1:-2]).split(', ')[0]
+        # TODO:最高水位直接从redis读写
 
         dev_info = {
             'id': dev[0],
@@ -82,22 +84,23 @@ def get_devices_info():
             'if_alarm': False
         }
         # 获取最新上报信息
-        dev_upload_msg = dbconn.get_newest_record(dev[0])
+        dev_upload_msg = redisCache.cache.redis_get_newest_record(dev[0])
+
         if (dev_upload_msg):
             # 用传感器ip代替串口服务器ip
             dev_info['ip'] = dev_upload_msg[0]['dev_ip']
             # print(dev_upload_msg)
             for sens in dev_upload_msg:
                 sen_info = {
-                    'high_level': dbconn.get_water_level(sens['sensor_id'], sens['distance']),
-                    'water_depth': dbconn.get_water_level(sens['sensor_id'], sens['distance']) -
-                                   dbconn.get_sensor_info(sens['sensor_id'])[6],
+                    'high_level': sens['offset'] - sens['distance'],
+                    'water_depth': sens['offset'] - sens['distance'] - sens['home_graph'],
                     'temperature': sens['temperature'],
-                    'sensor_name': dbconn.get_sensor_info(sens['sensor_id'])[1],
+                    'sensor_name': sens['sensor_name'],
                     'sensor_id': sens['sensor_id']
 
                 }
                 dev_info['data'].append(sen_info)
+                max_line = sens['max_line']
                 if (not int(max_line) == 0) and (int(sen_info['high_level']) > int(max_line)):
                     dev_info['if_alarm'] = True
 
@@ -343,9 +346,11 @@ def get_peroid_history():
     seleted_idx = seleted_idx[0:HISTORY_LIMIT]
 
     # 处理展示给前台的时间格式
+
     stamp_start = int(time.mktime(time.strptime(sql_ret[0][6], '%Y-%m-%d %H:%M:%S')))
-    stamp_end = int(time.mktime(time.strptime(sql_ret[0][6], '%Y-%m-%d %H:%M:%S')))
+    stamp_end = int(time.mktime(time.strptime(sql_ret[-1][6], '%Y-%m-%d %H:%M:%S')))
     time_delta = stamp_end - stamp_start
+    # print(sql_ret)
     format_code = 0
     format_start_idx = 0
     format_end_idx = -1
@@ -368,6 +373,7 @@ def get_peroid_history():
     # 遍历sql结果，符合条件的选出
     i = 0
     for rec in sql_ret:
+        # print(rec[6])
         if (i in seleted_idx):
             record = {
                 'id': i,
@@ -451,6 +457,15 @@ def generate_rt_report():
 
     return ret_dict
 
+def init_redis():
+    """初始化redis数据"""
+    dev_list = dbconn.get_all_dev_info()
+    # print(dev_list)
+    for dev in dev_list:
+        dev_datas = dbconn.get_newest_record(dev[0])
+        for upload_log in dev_datas:
+            redisCache.cache.redis_add_log(upload_log['sensor_id'], dev[0], upload_log['dev_ip'], upload_log['distance'], upload_log['temperature'], upload_log['update_time'])
 
 if __name__ == '__main__':
+    init_redis()
     app.run(host=Config.web_app['bind_address'], port=Config.web_app['bind_port'])
