@@ -12,10 +12,10 @@ import dbconn
 from flask_cors import *
 import sys
 import datetime
-
 sys.path.append("..")
 from conf import Config
 from msgPush import push
+import redisCache.cache
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -43,6 +43,9 @@ def upload_log():
         distance = request.args.get('distance')
         temperature = request.args.get('temperature')
 
+        # redis缓存
+        redisCache.cache.redis_add_log(sensor_id, dev_id, ip, distance, temperature)
+        # mysql持久化
         dbconn.add_log(dev_id, ip, sensor_id, distance, temperature)
 
         # 获取设备和传感器名称

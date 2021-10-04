@@ -236,7 +236,7 @@ def set_offset(sensor_id, offset):
 
     conn.commit()
 
-
+# TODO:get_sensor_distance改为redis调用
 def get_sensor_distance(sensor_id):
     """获取指定设备最新测量值"""
     cur = conn.cursor()
@@ -302,4 +302,5 @@ if __name__ == "__main__":
     # print(get_sensor_distance(3))
     # set_offset(3,100)
     # set_alarm_param(3,0,0,30,1000)
-    print(get_dev_by_id(3))
+    # print(get_dev_by_id(3))
+    print(get_all_dev_info())

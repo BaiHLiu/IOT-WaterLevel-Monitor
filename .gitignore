@@ -8,3 +8,4 @@ db.sqlite
 __pycache__/
 /imageCapture/camConf.py
 /docs/misc/
+/data/

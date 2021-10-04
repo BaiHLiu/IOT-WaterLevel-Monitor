@@ -55,7 +55,6 @@ function change_device_config() {
         'alarm_params': '',
         'username': localStorage.getItem('username'),
         'password': localStorage.getItem('password')
-        // TODO:添加报警参数
     }
 
     // console.log(req_data);
