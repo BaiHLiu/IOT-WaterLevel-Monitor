@@ -7,6 +7,7 @@
 import functools
 import json
 
+import redis
 from flask import Flask, request, jsonify, session, make_response
 from flask_cors import *
 import time
@@ -72,7 +73,7 @@ def get_devices_info():
     # print(devs)
 
     for dev in devs:
-        # TODO:最高水位直接从redis读写
+
 
         dev_info = {
             'id': dev[0],
@@ -80,6 +81,7 @@ def get_devices_info():
             'update_time': dev[3],
             'ip': None,
             'interval_time': dev[6],
+            'heart_time': None,
             'data': [],
             'if_alarm': False
         }
@@ -89,7 +91,10 @@ def get_devices_info():
         if (dev_upload_msg):
             # 用传感器ip代替串口服务器ip
             dev_info['ip'] = dev_upload_msg[0]['dev_ip']
-            # print(dev_upload_msg)
+            # TODOd:新增字段dev_info['heart_time']=0，从redis读取对应ip的最后上报时间
+            # 最后存活时间
+            dev_info['heart_time'] = redisCache.cache.get_update_time(dev_upload_msg[0]['dev_ip'])
+
             for sens in dev_upload_msg:
                 sen_info = {
                     'high_level': sens['offset'] - sens['distance'],

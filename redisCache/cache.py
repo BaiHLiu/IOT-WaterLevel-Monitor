@@ -57,7 +57,23 @@ def redis_get_newest_record(dev_id):
     return ret_list
 
 
+def set_upload_time(ip):
+    """设置ip最新上报时间为当前时间"""
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    rds.set('ut_'+str(ip), current_time)
+
+def get_update_time(ip):
+    """获取ip最新上报时间为当前时间"""
+    ut = rds.get('ut_'+str(ip))
+    if(ut):
+        return ut
+    else:
+        return "1970-01-01 00:00:00"
+
+
 if __name__ == '__main__':
-    print(redis_add_log(9, 13, '10.9.0.2', 3607, 304))
-    print(redis_add_log(11, 13, '10.9.0.2', 3607, 304))
-    print(redis_get_newest_record(13))
+    # print(redis_add_log(9, 13, '10.9.0.2', 3607, 304))
+    # print(redis_add_log(11, 13, '10.9.0.2', 3607, 304))
+    # print(redis_get_newest_record(13))
+    set_upload_time('192.168.19.1')
+    print(get_update_time('192.168.19.2'))

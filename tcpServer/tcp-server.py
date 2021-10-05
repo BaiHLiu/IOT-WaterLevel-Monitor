@@ -11,9 +11,13 @@ import socket
 import requests
 
 import sys
+
+import redisCache.cache
+
 sys.path.append("..")
 import httpAPI.utils as utils
 from conf import Config
+from redisCache import cache
 
 HTTP_API_ENDPOINT = Config.tcp_server['http_api_endpoint']
 
@@ -26,6 +30,7 @@ def get_client_info(tcp_client_1, tcp_client_address):
         client_ip = tcp_client_address[0]
         client_port = tcp_client_address[1]
         virtual_port_flag = 0
+
 
         # 请求http api，更新查询参数列表
         query_params = get_query_params(client_port)
@@ -48,6 +53,9 @@ def get_client_info(tcp_client_1, tcp_client_address):
             except:
                 print("[!] Register message is broken")
                 return
+        # TODOd:增加redis缓存ip最后上报时间，update_time_192.168.1.18:"2021-10-05 19:00:00"
+        redisCache.cache.set_upload_time(client_ip)
+
 
         INTERVAL_TIME = query_params['interval_time']
         for sensor_info in query_params['sensors_list']:

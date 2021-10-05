@@ -75,16 +75,27 @@ function get_devices_info() {
                     //上报状态
                     var interval_time = data[i]['interval_time'];
                     var update_time = data[i]['update_time'];
+                    var heart_time = data[i]['heart_time'];
                     var current_time = getCurrentTime();
-                    var time_delta = get_time_delta(current_time, update_time);
+                    //成功读取值的时间
+                    var time_delta1 = get_time_delta(current_time, update_time);
+                    //存活时间
+                    var time_delta2 = get_time_delta(current_time, heart_time);
 
-                    if (time_delta > 50 * interval_time) {
 
+                    if (time_delta2 > 50 * interval_time) {
                         // cocoMessage.error("有离线设备", 3000);
-                        //50次以上上报失败
+                        //50次以上没连接，网络故障
                         card.find('#status_icon').removeClass();
                         card.find('#status_icon').addClass('fas fa-close fa-2x text-danger');
-                    } else {
+                    }
+                    //TODOd:增加传感器连接有误提示，黄色感叹号提示，与离线区分开。通过['sensor_error']判断
+                    else if(time_delta1 > 50 * interval_time){
+                        //50次以上没数据，传感器故障
+                        card.find('#status_icon').removeClass();
+                        card.find('#status_icon').addClass('fas fa-close fa-2x fa-exclamation');
+                    }
+                    else {
                         card.find('#status_icon').removeClass();
                         card.find('#status_icon').addClass('fas fa-check fa-2x text-success');
                     }

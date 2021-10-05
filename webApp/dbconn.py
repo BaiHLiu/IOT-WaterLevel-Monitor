@@ -236,7 +236,7 @@ def set_offset(sensor_id, offset):
 
     conn.commit()
 
-# TODO:get_sensor_distance改为redis调用
+# TODOd:get_sensor_distance改为redis调用
 def get_sensor_distance(sensor_id):
     """获取指定设备最新测量值"""
     cur = conn.cursor()
