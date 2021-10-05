@@ -12,12 +12,12 @@ import requests
 
 import sys
 
-import redisCache.cache
+
 
 sys.path.append("..")
 import httpAPI.utils as utils
 from conf import Config
-from redisCache import cache
+import redisCache.cache
 
 HTTP_API_ENDPOINT = Config.tcp_server['http_api_endpoint']
 
