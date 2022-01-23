@@ -275,6 +275,13 @@ def set_alarm_param(dev_id, max_level, min_level, time_delta, level_delta):
     cur.execute(sql, params)
     conn.commit()
 
+def get_day_before_history(days):
+    today = dt.date.today()
+    before = today - dt.timedelta(days=days)
+
+    return before
+
+
 
 if __name__ == "__main__":
     # add_dev("测试地点",'6002')
@@ -303,4 +310,6 @@ if __name__ == "__main__":
     # set_offset(3,100)
     # set_alarm_param(3,0,0,30,1000)
     # print(get_dev_by_id(3))
+    # print(get_all_dev_info())
+    print(get_day_before_history(1))
     print(get_all_dev_info())

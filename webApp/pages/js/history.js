@@ -2,11 +2,15 @@ var page_count = 0;
 
 window.onload = function () {
     get_button_action();
+    
 }
 
+function get_button_action(){
+    cocoMessage.success('正在统计数据库，约需5s');
+    setTimeout(function() { get_button_action1();}, 100);
+}
 
-function get_button_action() {
-
+function get_button_action1() {
     /*响应按钮事件*/
     var start_time = $('#start-time').val();
     var end_time = $('#end-time').val();

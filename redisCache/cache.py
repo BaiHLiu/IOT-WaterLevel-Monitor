@@ -71,9 +71,30 @@ def get_update_time(ip):
         return "1970-01-01 00:00:00"
 
 
+def get_home_history():
+    """获取首页数据分析数据"""
+    ret = []
+    all_dev_info = webDB.get_all_dev_info()
+    for dev in all_dev_info:
+        dev_id = dev[0]
+        dev_name = dev[1]
+        sensors = webDB.get_sensors(dev_id)
+        # print(sensors)
+        for sensor in sensors:
+            ret.append(
+                (sensor[0],f"{dev_name}-{sensor[1]}")
+            )
+
+
+
+    return ret
+
+
+
 if __name__ == '__main__':
     # print(redis_add_log(9, 13, '10.9.0.2', 3607, 304))
     # print(redis_add_log(11, 13, '10.9.0.2', 3607, 304))
     # print(redis_get_newest_record(13))
-    set_upload_time('192.168.19.1')
-    print(get_update_time('192.168.19.2'))
+    # set_upload_time('192.168.19.1')
+    # print(get_update_time('192.168.19.2'))
+    print(get_home_history())

@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>水位监控-系统首页</title>
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/google-fonts.css">
+    <!--<link rel="stylesheet" href="./assets/css/google-fonts.css">-->
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/fonts/fontawesome5-overrides.min.css">
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./assets/js/coco-message.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.common.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.common.min.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/viewerjs/1.10.1/viewer.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/viewerjs/1.10.1/viewer.min.js"></script>
 
-    <script src="./js/home.js"></script>
+    <script src="./js/home14.js"></script>
     <script src="./js/common.js"></script>
     <script src="./js/config.js"></script>
 </head>
@@ -128,6 +128,7 @@
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">智慧河道水位监控平台</h3>
                     <p style="font-size: small; margin-top: 10px;">建设单位：昌邑市潍河防潮蓄水闸服务所</p>
+                    <button onclick="refresh();" class="btn btn-primary">强制刷新</button>
                 </div>
                 <div class="row" id="real-time-cards">
                     <div class="col-md-6 col-xl-3 mb-4 rt_card" style="display: none">
@@ -175,7 +176,13 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <script>
+                    ready_realtime_cards();
+                    get_devices_info();
+                    setTimeout(function() { get_devices_info(); }, 200);
+                    
+                </script>
 
                 <!--                即时图表卡片-->
                 <div class="row">
@@ -262,27 +269,33 @@
                             </div>
                             <div class="card-body">
                                 <p>点击图片放大预览</p>
+                                <a href="http://archive1.catop.top/misc/proxy.apk">远程插件下载</a>
                                 <ul id="viewer" style="list-style-type: none; margin:0; padding: 0">
                                     <li style="margin-bottom: 10px" id="img-城东"><img class="img-responsive"
                                                                                      style="max-width: 100%; height: auto"
-                                                                                     data-original="http://static.catop.top:8001/wateriot/img%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     src="http://static.catop.top:8001/wateriot/img%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     alt="城东-闸前"></li>
+                                                                                     data-original="http://archive1.catop.top/water-iot/img/%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     src="http://archive1.catop.top/water-iot/img/%E5%9F%8E%E4%B8%9C-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     alt="城东-闸前" loading="lazy"></li>
+                                    <li style="margin-bottom: 10px" id="img-城北"><img class="img-responsive"
+                                                                                     style="max-width: 100%; height: auto"
+                                                                                     data-original="http://archive1.catop.top/water-iot/img/%E5%9F%8E%E5%8C%97-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     src="http://archive1.catop.top/water-iot/img/%E5%9F%8E%E5%8C%97-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     alt="城北-闸前" loading="lazy"></li>
                                     <li style="margin-bottom: 10px" id="img-金口"><img class="img-responsive"
                                                                                      style="max-width: 100%; height: auto"
-                                                                                     data-original="http://static.catop.top:8001/wateriot/img%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     src="http://static.catop.top:8001/wateriot/img%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     alt="金口-闸前"></li>
+                                                                                     data-original="http://archive1.catop.top/water-iot/img/%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     src="http://archive1.catop.top/water-iot/img/%E9%87%91%E5%8F%A3-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     alt="金口-闸前" loading="lazy"></li>
                                     <li style="margin-bottom: 10px" id="img-丰产河"><img class="img-responsive"
                                                                                       style="max-width: 100%; height: auto"
-                                                                                      data-original="http://static.catop.top:8001/wateriot/img%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
-                                                                                      src="http://static.catop.top:8001/wateriot/img%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
-                                                                                      alt="丰产河-闸前"></li>
+                                                                                      data-original="http://archive1.catop.top/water-iot/img/%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
+                                                                                      src="http://archive1.catop.top/water-iot/img/%E4%B8%B0%E4%BA%A7%E6%B2%B3-%E9%97%B8%E5%89%8D.jpg"
+                                                                                      alt="丰产河-闸前" loading="lazy"></li>
                                     <li style="margin-bottom: 10px" id="img-柳疃"><img class="img-responsive"
                                                                                      style="max-width: 100%; height: auto"
-                                                                                     data-original="http://static.catop.top:8001/wateriot/img%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     src="http://static.catop.top:8001/wateriot/img%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
-                                                                                     alt="柳疃-闸前"></li>
+                                                                                     data-original="http://archive1.catop.top/water-iot/img/%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     src="http://archive1.catop.top/water-iot/img/%E6%9F%B3%E7%96%83-%E9%97%B8%E5%89%8D.jpg"
+                                                                                     alt="柳疃-闸前" loading="lazy"></li>
                                 </ul>
                             </div>
 
@@ -306,9 +319,15 @@
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
-<script src="assets/js/chart.min.js"></script>
+<!--<script src="assets/js/chart.min.js"></script>-->
 <script src="assets/js/bs-init.js"></script>
 <script src="assets/js/theme.js"></script>
+
+<script>
+!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"JZayjIxgUPjPOrMx",ck:"JZayjIxgUPjPOrMx"});
+</script>
+
+
 </body>
 
 </html>
