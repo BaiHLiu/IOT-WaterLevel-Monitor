@@ -102,6 +102,11 @@ def get_client_info(tcp_client_1, tcp_client_address):
                     "distance": int(resp_args[0][6:10], 16),
                     "temperature": int(resp_args[1][6:10], 16)
                 }
+
+                # 处理温度溢出问题
+                if resp_args[1][6] == 'f':
+                    params['temperature'] -= 65535
+
                 requests.get(url=HTTP_API_ENDPOINT + "/upload", params=params)
                 print("[+] Upload to HTTP-API successfully")
         # 轮询延时
